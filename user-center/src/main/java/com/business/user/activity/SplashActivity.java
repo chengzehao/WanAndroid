@@ -45,7 +45,7 @@ public class SplashActivity extends BaseActivity {
                             @Override
                             public void run() {
                                 CircularAnim.fullActivity(SplashActivity.this, findViewById(R.id.appName))
-                                        .colorOrImageRes(R.color.colorPrimaryDark)
+                                        .colorOrImageRes(R.color.colorAccent)
                                         .go(new CircularAnim.OnAnimationEndListener() {
                                             @Override
                                             public void onAnimationEnd() {
@@ -53,7 +53,7 @@ public class SplashActivity extends BaseActivity {
                                                 if (StringUtils.isNullOrEmpty(username)) {
                                                     readyGoThenKill(AccountLoginActivity.class);
                                                 } else {
-                                                    ARouter.getInstance().build("/Supervise/MainActivity").navigation();
+                                                    ARouter.getInstance().build("/WanAndroid/MainActivity").navigation();
                                                     finish();
                                                 }
                                             }

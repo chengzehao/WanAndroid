@@ -121,11 +121,11 @@ public class AccountLoginActivity extends AbstractDoubleClickOutActivity {
 
     private void toHome() {
         CircularAnim.fullActivity(this, mBtLogin)
-                .colorOrImageRes(R.color.colorPrimaryDark)
+                .colorOrImageRes(R.color.colorAccent)
                 .go(new CircularAnim.OnAnimationEndListener() {
                     @Override
                     public void onAnimationEnd() {
-                        ARouter.getInstance().build("/Supervise/MainActivity").navigation();
+                        ARouter.getInstance().build("/WanAndroid/MainActivity").navigation();
                         finish();
                     }
                 });

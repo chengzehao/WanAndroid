@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen>
+    <tabs>
+        <tab
+            icon="@mipmap/bottom_menu_home"
+            id="@+id/tab_home"
+            title="首页" />
+
+        <tab
+            icon="@mipmap/bottom_menu_project"
+            id="@+id/tab_project"
+            title="项目" />
+
+        <tab
+            icon="@mipmap/bottom_menu_system"
+            id="@+id/tab_system"
+            title="体系" />
+
+        <tab
+            icon="@mipmap/bottom_menu_mine"
+            id="@+id/tab_mine"
+            title="我的" />
+    </tabs>
+</PreferenceScreen>

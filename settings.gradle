@@ -1,1 +1,1 @@
-include ':app', ':common', ':user-center'
+include ':app', ':common', ':user-center', ':wanandroid'

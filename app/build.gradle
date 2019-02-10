@@ -60,5 +60,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     if (isBeModule.toBoolean()) {
         compile project(':user-center')
+        compile project(':wanandroid')
     }
 }
