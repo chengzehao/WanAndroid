@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.TabLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/tab_layout"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="@color/md_white_1000"
+    app:tabMaxWidth="0dp"
+    app:tabGravity="fill"
+    app:tabIndicatorHeight="2dp"
+    app:tabMode="scrollable"
+    app:tabIndicatorColor="@color/colorPrimary"
+    app:tabSelectedTextColor="@color/colorPrimary"
+    app:tabTextColor="@color/md_grey_500" />

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MSStepTabsContainer" parent="Base.MSStepTabsContainer">
+        <item name="android:background">@color/ms_white</item>
+    </style>
+</resources>

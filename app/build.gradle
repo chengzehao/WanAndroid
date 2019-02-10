@@ -1,0 +1,64 @@
+apply plugin: 'com.android.application'
+
+android {
+    dexOptions {
+        jumboMode = true
+    }
+    signingConfigs {
+        config {
+            keyAlias 'zl'
+            keyPassword '310125'
+            storeFile file('F:/richsoft.jks')
+            storePassword '310125'
+        }
+    }
+
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.symbol.wanandroid"
+        minSdkVersion 19
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+    }
+    buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        release {
+            debuggable false
+            minifyEnabled true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+    lintOptions {
+        abortOnError false
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    if (isBeModule.toBoolean()) {
+        compile project(':user-center')
+    }
+}

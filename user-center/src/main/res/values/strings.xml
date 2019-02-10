@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">USER</string>
+    <string name="app_name_des">USER</string>
+    <string name="login">登录</string>
+    <string name="input_mm">输入密码</string>
+    <string name="input_zh">输入账号</string>
+    <string name="logout">注销登录</string>
+    <string name="account">账号输入</string>
+    <string name="mm">密码输入</string>
+    <string name="re_mm">再次密码输入</string>
+    <string name="register">注册</string>
+</resources>

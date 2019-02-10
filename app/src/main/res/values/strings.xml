@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">WanAndroid</string>
+    <string name="app_name_des">一个Android开发学习社区</string>
+    <!--公共-->
+    <string name="illegal_root">该设备已被root！出于安全，无法运行该程序！</string>
+    <string name="illegal_virtual_machine">该程序不得在虚拟机上运行！</string>
+    <string name="ms_back">上一步</string>
+    <string name="ms_complete">完成</string>
+    <string name="ms_next">下一步</string>
+    <string name="customactivityoncrash_error_activity_error_occurred_explanation">出现了一个异常\n很抱歉给您带来不便.</string>
+    <string name="customactivityoncrash_error_activity_close_app">关闭 app</string>
+    <string name="customactivityoncrash_error_activity_restart_app">重启 app</string>
+    <string name="customactivityoncrash_error_activity_error_details">错误详情</string>
+    <string name="customactivityoncrash_error_activity_error_details_clipboard_label">错误信息</string>
+    <string name="customactivityoncrash_error_activity_error_details_close">关闭</string>
+    <string name="customactivityoncrash_error_activity_error_details_copied">复制到剪贴板</string>
+    <string name="customactivityoncrash_error_activity_error_details_copy">复制到剪贴板</string>
+    <string name="customactivityoncrash_error_activity_error_details_title">错误详情</string>
+
+</resources>

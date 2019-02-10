@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Library</string>
+    <string name="img_des">Material</string>
+    <string name="des">Material</string>
+    <string name="exit_notifiy">再按一次退出应用</string>
+    <string name="permission_reject">相关权限被拒绝</string>
+    <string name="scan_code_faill">扫描失败</string>
+    <string name="error_please_check_network">请检查网络。</string>
+    <string name="error_timeout">请求超时，网络不好或者服务器不稳定。</string>
+    <string name="error_not_found_server">未发现指定服务器，清切换网络后重试。</string>
+    <string name="error_url_error">URL错误。</string>
+    <string name="error_unknow">未知错误。</string>
+    <string name="please_wait">请您稍候&#8230;</string>
+    <string name="sure">确定</string>
+    <string name="submit">提交</string>
+</resources>

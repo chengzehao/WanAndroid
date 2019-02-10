@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/img_des"
+        android:scaleType="centerCrop"
+        android:src="@drawable/home_bg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="30dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/appName"
+            style="@style/Text.Size16ColorAccent"
+            android:text="@string/app_name"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <TextView
+            style="@style/Text.Size14ColorAccent"
+            android:layout_marginTop="5dp"
+            android:text="@string/app_name_des" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shape_grey_corner_5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/img_des"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_verified_user_grey600_18dp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/md_grey_300" />
+
+            <com.gs.keyboard.SecurityEditText
+                android:id="@+id/account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:ellipsize="end"
+                android:hint="@string/account"
+                android:inputType="text"
+                android:lines="1"
+                android:maxLength="20"
+                android:padding="5dp"
+                android:textColor="@color/md_grey_800"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_grey_corner_5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/img_des"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_https_grey600_18dp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/md_grey_300" />
+
+            <com.gs.keyboard.SecurityEditText
+                android:id="@+id/mm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:ellipsize="end"
+                android:hint="@string/mm"
+                android:inputType="textPassword"
+                android:lines="1"
+                android:maxLength="20"
+                android:padding="5dp"
+                android:textColor="@color/md_grey_800"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/bt_login"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/login"
+            android:theme="@style/AccentColorButtonTheme" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="end|center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/Text.Size14ColorGrey500"
+                android:text="还没有账号？" />
+
+            <TextView
+                android:id="@+id/to_register"
+                style="@style/Text.Size14ColorAccent"
+                android:background="?attr/selectableItemBackground"
+                android:padding="10dp"
+                android:text="去注册"
+                android:textStyle="italic" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
