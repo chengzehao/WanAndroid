@@ -2,6 +2,7 @@ package com.business.wanandroid.fragment;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sgitg.common.ConstantValue;
 import com.sgitg.common.base.AbstractLazyLoadListFragment;
+import com.sgitg.common.common.WebViewActivity;
 import com.sgitg.common.http.RestResult;
 import com.sgitg.common.imageloader.GlideImageLoader;
 import com.youth.banner.Banner;
@@ -113,7 +115,11 @@ public class HomeFragment extends AbstractLazyLoadListFragment<HomeArticleBean.D
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
+                HomeArticleBean.DatasBean bean = (HomeArticleBean.DatasBean) adapter.getData().get(position);
+                Bundle b = new Bundle();
+                b.putString(WebViewActivity.WEB_URL, bean.getLink());
+                b.putString(WebViewActivity.TITLE, bean.getTitle());
+                readyGo(WebViewActivity.class, b);
             }
         });
         return adapter;

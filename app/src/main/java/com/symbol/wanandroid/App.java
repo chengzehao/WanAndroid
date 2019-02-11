@@ -15,11 +15,11 @@ public class App extends LibApp {
     public void onCreate() {
         super.onCreate();
         NdkMethods.signatureVerify(this);
-        if (CommonUtils.isRoot()) {
+        /*if (CommonUtils.isRoot()) {
             throw new RuntimeException(getString(R.string.illegal_root));
         }
         if (CommonUtils.isEmulator(this)) {
             throw new RuntimeException(getString(R.string.illegal_virtual_machine));
-        }
+        }*/
     }
 }

@@ -82,4 +82,5 @@ dependencies {
     compile 'com.android.support:multidex:1.0.0'
     compile 'com.youth.banner:banner:1.4.10'
     compile 'com.github.jd-alexander:LikeButton:0.2.3'
+    compile 'com.just.agentweb:agentweb:4.0.2'
 }

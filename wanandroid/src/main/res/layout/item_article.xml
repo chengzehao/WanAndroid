@@ -10,9 +10,9 @@
     app:cardUseCompatPadding="true">
 
     <RelativeLayout
-        android:id="@+id/rl_gank"
         android:layout_width="match_parent"
-        android:layout_height="130dp">
+        android:layout_height="130dp"
+        android:background="?attr/selectableItemBackground">
 
         <ImageView
             android:id="@+id/iv_img"
@@ -67,8 +67,7 @@
 
                 <TextView
                     android:id="@+id/chapterName"
-                    style="@style/Text.FrameAccentSize12"
-                    android:text="公众号" />
+                    style="@style/Text.FrameAccentSize12" />
 
                 <View
                     android:layout_width="0dp"

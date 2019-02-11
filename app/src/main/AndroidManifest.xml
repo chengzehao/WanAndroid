@@ -51,5 +51,7 @@
             android:name="com.business.wanandroid.activity.WanAndroidMainActivity"
             android:launchMode="singleTask" />
 
+        <activity android:name="com.sgitg.common.common.WebViewActivity" />
+
     </application>
 </manifest>

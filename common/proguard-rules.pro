@@ -98,6 +98,11 @@
 -keepclassmembers class * {
     void *(**On*Event);
 }
+#agentweb
+-keep class com.just.agentweb.** {
+    *;
+}
+-dontwarn com.just.agentweb.**
 #----------------------------------------------------------------------------
 
 #---------------------------------webview------------------------------------
