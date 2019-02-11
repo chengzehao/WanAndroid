@@ -99,7 +99,7 @@ public abstract class AbstractLazyLoadListFragment<T> extends AbstractLazyLoadFr
 
 
     protected int getInitPageIndex() {
-        return 1;
+        return 0;
     }
 
     protected int getPageSize() {

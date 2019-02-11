@@ -80,4 +80,6 @@ dependencies {
     compile 'com.alibaba:arouter-api:1.4.1'
     annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
     compile 'com.android.support:multidex:1.0.0'
+    compile 'com.youth.banner:banner:1.4.10'
+    compile 'com.github.jd-alexander:LikeButton:0.2.3'
 }

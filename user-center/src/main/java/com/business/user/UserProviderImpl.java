@@ -1,6 +1,7 @@
 package com.business.user;
 
 import android.content.Context;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.sgitg.common.LibApp;
@@ -49,6 +50,16 @@ public class UserProviderImpl implements UserProvider {
     @Override
     public String getUserName() {
         return Authority.getUserName();
+    }
+
+    @Override
+    public int getUserId() {
+        return Authority.getUserId();
+    }
+
+    @Override
+    public String getUserToken() {
+        return Authority.getToken();
     }
 
     @Override

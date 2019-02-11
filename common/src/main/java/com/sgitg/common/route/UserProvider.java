@@ -23,4 +23,8 @@ public interface UserProvider extends IProvider {
 
     String getUserName();
 
+    int getUserId();
+
+    String getUserToken();
+
 }

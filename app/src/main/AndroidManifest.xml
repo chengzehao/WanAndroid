@@ -48,7 +48,7 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
-            android:name="com.business.wanandroid.WanAndroidMainActivity"
+            android:name="com.business.wanandroid.activity.WanAndroidMainActivity"
             android:launchMode="singleTask" />
 
     </application>
