@@ -1,6 +1,7 @@
 package com.business.wanandroid.fragment;
 
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,8 +20,10 @@ import com.sgitg.common.base.AbstractLazyLoadListFragment;
 import com.sgitg.common.common.WebViewActivity;
 import com.sgitg.common.http.RestResult;
 import com.sgitg.common.imageloader.GlideImageLoader;
+import com.sgitg.common.viewmodel.LViewModelProviders;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,14 +37,19 @@ import java.util.List;
 
 public class HomeFragment extends AbstractLazyLoadListFragment<HomeArticleBean.DatasBean> {
     private HomeViewModel mViewModel;
-    private View mHeaderView;
     private Banner mBanner;
+
+    @Override
+    protected ViewModel initViewModel() {
+        mViewModel = LViewModelProviders.of(this, HomeViewModel.class);
+        return mViewModel;
+    }
 
     @Override
     protected void setUpView() {
         super.setUpView();
         mViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
-        mHeaderView = getHeaderView();
+        View mHeaderView = getHeaderView();
         mBanner = mHeaderView.findViewById(R.id.banner);
         mBanner.setImageLoader(new GlideImageLoader());
         mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
@@ -77,7 +85,7 @@ public class HomeFragment extends AbstractLazyLoadListFragment<HomeArticleBean.D
         }
     }
 
-    private void fillBanner(ArrayList<HomeBannerBean> data) {
+    private void fillBanner(final ArrayList<HomeBannerBean> data) {
         List<String> images = new ArrayList<>();
         List<String> titles = new ArrayList<>();
         for (HomeBannerBean datum : data) {
@@ -87,6 +95,15 @@ public class HomeFragment extends AbstractLazyLoadListFragment<HomeArticleBean.D
         mBanner.setImages(images);
         mBanner.setBannerTitles(titles);
         mBanner.start();
+        mBanner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                Bundle b = new Bundle();
+                b.putString(WebViewActivity.WEB_URL, data.get(position).getUrl());
+                b.putString(WebViewActivity.TITLE, data.get(position).getTitle());
+                readyGo(WebViewActivity.class, b);
+            }
+        });
         loadArticle(getInitPageIndex());
     }
 
