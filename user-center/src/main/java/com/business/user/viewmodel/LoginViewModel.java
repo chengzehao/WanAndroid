@@ -13,6 +13,7 @@ import com.sgitg.common.http.HttpListener;
 import com.sgitg.common.http.RestResult;
 import com.sgitg.common.thread.MainThreadExcute;
 import com.sgitg.common.thread.ThreadManager;
+import com.sgitg.common.viewmodel.BaseViewModel;
 import com.yanzhenjie.nohttp.RequestMethod;
 
 /**
@@ -22,24 +23,33 @@ import com.yanzhenjie.nohttp.RequestMethod;
  * @date 2018/5/24/024 11:44
  */
 
-public class LoginViewModel extends ViewModel {
-    private LiveData<RestResult<UserBean>> mData;
+public class LoginViewModel extends BaseViewModel {
+    private MutableLiveData<RestResult<UserBean>> mUserData;
+
+    public LoginViewModel() {
+        mUserData= new MutableLiveData<>();
+    }
 
     public void login(String username, String password) {
-        final MutableLiveData<RestResult<UserBean>> data = new MutableLiveData<>();
+        startLoading("登录中,请稍候..");
         EntityRequest<UserBean> request = new EntityRequest<>(Urls.LOGIN, RequestMethod.POST, UserBean.class);
         request.add("username", username);
         request.add("password", password);
         CallServer.getInstance().request(0, request, new HttpListener<UserBean>() {
             @Override
             public void onResponse(int what, RestResult<UserBean> t) {
-                data.setValue(t);
+                dismissLoading();
+                if(t.getErrorCode() == ConstantValue.ST_SUCCESS){
+                    showSuccessToast("登录成功！");
+                    mUserData.setValue(t);
+                }else {
+                    showFaillToast(t.getErrorMsg());
+                }
             }
         });
-        mData = data;
     }
 
     public LiveData<RestResult<UserBean>> getLoginResult() {
-        return mData;
+        return mUserData;
     }
 }

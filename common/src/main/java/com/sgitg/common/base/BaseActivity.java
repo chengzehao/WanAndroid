@@ -1,10 +1,13 @@
 package com.sgitg.common.base;
 
 import android.app.AlertDialog;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModel;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
@@ -15,10 +18,16 @@ import com.github.javiersantos.materialstyleddialogs.enums.Style;
 import com.sgitg.common.EventCenter;
 import com.sgitg.common.LibApp;
 import com.sgitg.common.R;
+import com.sgitg.common.utils.ToastUtils;
+import com.sgitg.common.viewmodel.BaseActionEvent;
+import com.sgitg.common.viewmodel.IViewModelAction;
 import com.yanzhenjie.sofia.Sofia;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import dmax.dialog.SpotsDialog;
 
@@ -35,6 +44,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initViewModelEvent();
         LibApp.getInstance().addActivity(this);
         Bundle extras = getIntent().getExtras();
         if (null != extras) {
@@ -48,6 +58,70 @@ public abstract class BaseActivity extends AppCompatActivity {
         Sofia.with(this).statusBarDarkFont().statusBarBackground(ContextCompat.getColor(this,R.color.colorPrimary));
         setUpView();
         setUpData();
+    }
+
+    private void initViewModelEvent() {
+        List<ViewModel> viewModelList = initViewModelList();
+        if (viewModelList != null && viewModelList.size() > 0) {
+            observeEvent(viewModelList);
+        } else {
+            ViewModel viewModel = initViewModel();
+            if (viewModel != null) {
+                List<ViewModel> modelList = new ArrayList<>();
+                modelList.add(viewModel);
+                observeEvent(modelList);
+            }
+        }
+    }
+
+    protected ViewModel initViewModel(){
+        return null;
+    };
+
+    protected List<ViewModel> initViewModelList() {
+        return null;
+    }
+
+    private void observeEvent(List<ViewModel> viewModelList) {
+        for (ViewModel viewModel : viewModelList) {
+            if (viewModel instanceof IViewModelAction) {
+                IViewModelAction viewModelAction = (IViewModelAction) viewModel;
+                viewModelAction.getActionLiveData().observe(this, new Observer<BaseActionEvent>() {
+                    @Override
+                    public void onChanged(@Nullable BaseActionEvent baseActionEvent) {
+                        if (baseActionEvent != null) {
+                            switch (baseActionEvent.getAction()) {
+                                case BaseActionEvent.SHOW_LOADING: {
+                                    showLoadingDialog(baseActionEvent.getMessage());
+                                    break;
+                                }
+                                case BaseActionEvent.DISMISS_LOADING: {
+                                    dismissLoadingDialog();
+                                    break;
+                                }
+                                case BaseActionEvent.SHOW_SUCCESS_TOAST: {
+                                    ToastUtils.getInstance().showSuccessInfoToast(baseActionEvent.getMessage());
+                                    break;
+                                }
+                                case BaseActionEvent.SHOW_FAILL_TOAST: {
+                                    ToastUtils.getInstance().showErrorInfoToast(baseActionEvent.getMessage());
+                                    break;
+                                }
+                                case BaseActionEvent.FINISH: {
+                                    finish();
+                                    break;
+                                }
+                                case BaseActionEvent.FINISH_WITH_RESULT_OK: {
+                                    setResult(RESULT_OK);
+                                    finish();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
     }
 
     protected void getBundleExtras(Bundle extras) {

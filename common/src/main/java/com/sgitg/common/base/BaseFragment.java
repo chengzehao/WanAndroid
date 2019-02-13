@@ -1,6 +1,8 @@
 package com.sgitg.common.base;
 
 import android.app.AlertDialog;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModel;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,9 +20,15 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.github.javiersantos.materialstyleddialogs.enums.Style;
 import com.sgitg.common.EventCenter;
+import com.sgitg.common.utils.ToastUtils;
+import com.sgitg.common.viewmodel.BaseActionEvent;
+import com.sgitg.common.viewmodel.IViewModelAction;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import dmax.dialog.SpotsDialog;
 
@@ -40,6 +48,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initViewModelEvent();
         if (isBindEventBusHere()) {
             EventBus.getDefault().register(this);
         }
@@ -54,6 +63,67 @@ public abstract class BaseFragment extends Fragment {
         setUpView();
         setUpData();
         return mContentView;
+    }
+
+    private void initViewModelEvent() {
+        List<ViewModel> viewModelList = initViewModelList();
+        if (viewModelList != null && viewModelList.size() > 0) {
+            observeEvent(viewModelList);
+        } else {
+            ViewModel viewModel = initViewModel();
+            if (viewModel != null) {
+                List<ViewModel> modelList = new ArrayList<>();
+                modelList.add(viewModel);
+                observeEvent(modelList);
+            }
+        }
+    }
+
+    protected ViewModel initViewModel() {
+        return null;
+    }
+
+    ;
+
+    protected List<ViewModel> initViewModelList() {
+        return null;
+    }
+
+    private void observeEvent(List<ViewModel> viewModelList) {
+        for (ViewModel viewModel : viewModelList) {
+            if (viewModel instanceof IViewModelAction) {
+                IViewModelAction viewModelAction = (IViewModelAction) viewModel;
+                viewModelAction.getActionLiveData().observe(this, new Observer<BaseActionEvent>() {
+                    @Override
+                    public void onChanged(@Nullable BaseActionEvent baseActionEvent) {
+                        if (baseActionEvent != null) {
+                            switch (baseActionEvent.getAction()) {
+                                case BaseActionEvent.SHOW_LOADING: {
+                                    showLoadingDialog(baseActionEvent.getMessage());
+                                    break;
+                                }
+                                case BaseActionEvent.DISMISS_LOADING: {
+                                    dismissLoadingDialog();
+                                    break;
+                                }
+                                case BaseActionEvent.SHOW_SUCCESS_TOAST: {
+                                    ToastUtils.getInstance().showSuccessInfoToast(baseActionEvent.getMessage());
+                                    break;
+                                }
+                                case BaseActionEvent.SHOW_FAILL_TOAST: {
+                                    ToastUtils.getInstance().showErrorInfoToast(baseActionEvent.getMessage());
+                                    break;
+                                }
+                                case BaseActionEvent.FINISH: {
+                                    getMActivity().finish();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
     }
 
     /**

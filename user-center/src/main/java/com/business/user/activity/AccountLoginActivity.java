@@ -1,6 +1,7 @@
 package com.business.user.activity;
 
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Looper;
 import android.support.annotation.Nullable;
@@ -19,7 +20,6 @@ import com.gs.keyboard.KeyboardType;
 import com.gs.keyboard.SecurityConfigure;
 import com.gs.keyboard.SecurityEditText;
 import com.gs.keyboard.SecurityKeyboard;
-import com.sgitg.common.ConstantValue;
 import com.sgitg.common.base.AbstractDoubleClickOutActivity;
 import com.sgitg.common.http.RestResult;
 import com.sgitg.common.thread.MainThreadExcute;
@@ -27,6 +27,7 @@ import com.sgitg.common.thread.ThreadManager;
 import com.sgitg.common.utils.KeyboardUtils;
 import com.sgitg.common.utils.StringUtils;
 import com.sgitg.common.utils.ToastUtils;
+import com.sgitg.common.viewmodel.LViewModelProviders;
 import com.yanzhenjie.sofia.Sofia;
 
 import top.wefor.circularanim.CircularAnim;
@@ -47,6 +48,20 @@ public class AccountLoginActivity extends AbstractDoubleClickOutActivity {
     @Override
     protected int setLayoutResourceID() {
         return R.layout.activity_account_login;
+    }
+
+    @Override
+    protected ViewModel initViewModel() {
+        mLoginViewModel = LViewModelProviders.of(this, LoginViewModel.class);
+        mLoginViewModel.getLoginResult().observe(AccountLoginActivity.this, new Observer<RestResult<UserBean>>() {
+            @Override
+            public void onChanged(@Nullable RestResult<UserBean> userBeanRestResult) {
+                if (userBeanRestResult != null) {
+                    successLogin(userBeanRestResult.getData());
+                }
+            }
+        });
+        return mLoginViewModel;
     }
 
     @Override
@@ -76,22 +91,7 @@ public class AccountLoginActivity extends AbstractDoubleClickOutActivity {
                     ToastUtils.getInstance().showErrorInfoToast("密码格式非法！");
                     return;
                 }
-                showLoadingDialog("登录中,请稍候..");
                 mLoginViewModel.login(mAccount.getText().toString(), mM.getText().toString());
-                mLoginViewModel.getLoginResult().observe(AccountLoginActivity.this, new Observer<RestResult<UserBean>>() {
-                    @Override
-                    public void onChanged(@Nullable RestResult<UserBean> userBeanRestResult) {
-                        dismissLoadingDialog();
-                        if (userBeanRestResult == null) {
-                            return;
-                        }
-                        if (userBeanRestResult.getErrorCode() == ConstantValue.ST_SUCCESS) {
-                            successLogin(userBeanRestResult.getData());
-                        } else {
-                            ToastUtils.getInstance().showErrorInfoToast(userBeanRestResult.getErrorMsg());
-                        }
-                    }
-                });
             }
         });
 
