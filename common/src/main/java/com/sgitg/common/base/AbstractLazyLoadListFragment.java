@@ -44,7 +44,6 @@ public abstract class AbstractLazyLoadListFragment<T> extends AbstractLazyLoadFr
         if (mAdapter == null) {
             throw new IllegalAccessError("请设置适配器！");
         }
-        //mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         mStatusViewLayout = getContentView().findViewById(R.id.status_view);
         mRecyclerView = getContentView().findViewById(R.id.rv_list);
         mSwipeRefreshLayout = getContentView().findViewById(R.id.swipeLayout);
@@ -174,4 +173,7 @@ public abstract class AbstractLazyLoadListFragment<T> extends AbstractLazyLoadFr
         mStatusViewLayout.showLoading();
     }
 
+    public int getCurrentPageIndex() {
+        return mCurrentPageIndex;
+    }
 }

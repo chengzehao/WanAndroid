@@ -24,12 +24,16 @@ import java.util.ArrayList;
  */
 
 public class HomeViewModel extends BaseViewModel {
-    private MutableLiveData<HomeArticleBean> mHomeArticleBean;
-    private MutableLiveData<ArrayList<HomeBannerBean>> mHomeBannerBeans;
+    private MutableLiveData<HomeArticleBean> mHomeArticleData;
+    private MutableLiveData<String> mLoadHomeArticleError;
+    private MutableLiveData<ArrayList<HomeBannerBean>> mHomeBannerData;
+    private MutableLiveData<String> mLoadHomeBannerError;
 
     public HomeViewModel() {
-        mHomeArticleBean = new MutableLiveData<>();
-        mHomeBannerBeans = new MutableLiveData<>();
+        mHomeArticleData = new MutableLiveData<>();
+        mLoadHomeArticleError = new MutableLiveData<>();
+        mHomeBannerData = new MutableLiveData<>();
+        mLoadHomeBannerError = new MutableLiveData<>();
     }
 
     public void loadHomeArticle(int pageIndex) {
@@ -38,36 +42,44 @@ public class HomeViewModel extends BaseViewModel {
         CallServer.getInstance().request(0, request, new HttpListener<HomeArticleBean>() {
             @Override
             public void onSuccess(int what, HomeArticleBean homeArticleBean) {
-                mHomeArticleBean.setValue(homeArticleBean);
+                mHomeArticleData.setValue(homeArticleBean);
             }
 
             @Override
             public void onFaill(int what, String error) {
-
+                mLoadHomeArticleError.setValue(error);
             }
         });
     }
 
-    public LiveData<HomeArticleBean> getHomeArticleBean() {
-        return mHomeArticleBean;
+    public LiveData<HomeArticleBean> getHomeArticle() {
+        return mHomeArticleData;
     }
 
-    public void loadHomeBannerBeans() {
+    public MutableLiveData<String> getLoadHomeArticleError() {
+        return mLoadHomeArticleError;
+    }
+
+    public void loadHomeBannerData() {
         EntityListRequest<HomeBannerBean> request = new EntityListRequest<>(Urls.HOME_BANNER, RequestMethod.GET, HomeBannerBean.class);
         CallServer.getInstance().request(0, request, new HttpListener<ArrayList<HomeBannerBean>>() {
             @Override
             public void onSuccess(int what, ArrayList<HomeBannerBean> homeBannerBeans) {
-                mHomeBannerBeans.setValue(homeBannerBeans);
+                mHomeBannerData.setValue(homeBannerBeans);
             }
 
             @Override
             public void onFaill(int what, String error) {
-
+                mLoadHomeBannerError.setValue(error);
             }
         });
     }
 
-    public LiveData<ArrayList<HomeBannerBean>> getHomeBannerBeans() {
-        return mHomeBannerBeans;
+    public LiveData<ArrayList<HomeBannerBean>> getHomeBannerData() {
+        return mHomeBannerData;
+    }
+
+    public MutableLiveData<String> getLoadHomeBannerError() {
+        return mLoadHomeBannerError;
     }
 }

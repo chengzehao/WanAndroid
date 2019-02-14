@@ -40,6 +40,30 @@ public class HomeFragment extends AbstractLazyLoadListFragment<HomeArticleBean.D
     @Override
     protected ViewModel initViewModel() {
         mViewModel = LViewModelProviders.of(this, HomeViewModel.class);
+        mViewModel.getHomeBannerData().observe(this, new Observer<ArrayList<HomeBannerBean>>() {
+            @Override
+            public void onChanged(@Nullable ArrayList<HomeBannerBean> homeBannerBeans) {
+                fillBanner(homeBannerBeans);
+            }
+        });
+        mViewModel.getLoadHomeBannerError().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                onLoadDataError(true, "加载失败 " + s);
+            }
+        });
+        mViewModel.getHomeArticle().observe(this, new Observer<HomeArticleBean>() {
+            @Override
+            public void onChanged(@Nullable HomeArticleBean homeArticleBean) {
+                onLoadDataSuccess(getCurrentPageIndex() == getInitPageIndex(), homeArticleBean.getDatas());
+            }
+        });
+        mViewModel.getLoadHomeArticleError().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                onLoadDataError(getCurrentPageIndex() == getInitPageIndex(), "加载失败 " + s);
+            }
+        });
         return mViewModel;
     }
 
@@ -64,20 +88,9 @@ public class HomeFragment extends AbstractLazyLoadListFragment<HomeArticleBean.D
     @Override
     public void loadData(final int pageIndex) {
         if (pageIndex == getInitPageIndex()) {
-            mViewModel.loadHomeBannerBeans();
-            mViewModel.getHomeBannerBeans().observe(this, new Observer<ArrayList<HomeBannerBean>>() {
-                @Override
-                public void onChanged(@Nullable ArrayList<HomeBannerBean> homeBannerBeans) {
-                    fillBanner(homeBannerBeans);
-                    /*if (arrayListRestResult.getErrorCode() == ConstantValue.ST_SUCCESS) {
-                        fillBanner(arrayListRestResult.getData());
-                    } else {
-                        onLoadDataError(true, "加载失败 " + arrayListRestResult.getErrorMsg());
-                    }*/
-                }
-            });
+            mViewModel.loadHomeBannerData();
         } else {
-            loadArticle(pageIndex);
+            mViewModel.loadHomeArticle(pageIndex);
         }
     }
 
@@ -100,24 +113,8 @@ public class HomeFragment extends AbstractLazyLoadListFragment<HomeArticleBean.D
                 readyGo(WebViewActivity.class, b);
             }
         });
-        loadArticle(getInitPageIndex());
+        mViewModel.loadHomeArticle(getInitPageIndex());
     }
-
-    private void loadArticle(final int pageIndex) {
-        mViewModel.loadHomeArticle(pageIndex);
-        mViewModel.getHomeArticleBean().observe(this, new Observer<HomeArticleBean>() {
-            @Override
-            public void onChanged(@Nullable HomeArticleBean homeArticleBean) {
-                onLoadDataSuccess(pageIndex == getInitPageIndex(), homeArticleBean.getDatas());
-                /*if (homeArticleBeanRestResult.getErrorCode() == ConstantValue.ST_SUCCESS) {
-
-                } else {
-                    onLoadDataError(pageIndex == getInitPageIndex(), "加载失败 " + homeArticleBeanRestResult.getErrorMsg());
-                }*/
-            }
-        });
-    }
-
 
     @Override
     protected BaseQuickAdapter<HomeArticleBean.DatasBean, BaseViewHolder> createAdapter() {

@@ -83,8 +83,6 @@ public abstract class BaseFragment extends Fragment {
         return null;
     }
 
-    ;
-
     protected List<ViewModel> initViewModelList() {
         return null;
     }
