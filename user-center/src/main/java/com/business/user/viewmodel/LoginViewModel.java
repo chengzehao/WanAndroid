@@ -2,17 +2,12 @@ package com.business.user.viewmodel;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
 
 import com.business.user.Urls;
 import com.business.user.bean.UserBean;
-import com.sgitg.common.ConstantValue;
 import com.sgitg.common.http.CallServer;
 import com.sgitg.common.http.EntityRequest;
 import com.sgitg.common.http.HttpListener;
-import com.sgitg.common.http.RestResult;
-import com.sgitg.common.thread.MainThreadExcute;
-import com.sgitg.common.thread.ThreadManager;
 import com.sgitg.common.viewmodel.BaseViewModel;
 import com.yanzhenjie.nohttp.RequestMethod;
 
@@ -24,10 +19,10 @@ import com.yanzhenjie.nohttp.RequestMethod;
  */
 
 public class LoginViewModel extends BaseViewModel {
-    private MutableLiveData<RestResult<UserBean>> mUserData;
+    private MutableLiveData<UserBean> mUserData;
 
     public LoginViewModel() {
-        mUserData= new MutableLiveData<>();
+        mUserData = new MutableLiveData<>();
     }
 
     public void login(String username, String password) {
@@ -37,19 +32,21 @@ public class LoginViewModel extends BaseViewModel {
         request.add("password", password);
         CallServer.getInstance().request(0, request, new HttpListener<UserBean>() {
             @Override
-            public void onResponse(int what, RestResult<UserBean> t) {
+            public void onSuccess(int what, UserBean userBean) {
                 dismissLoading();
-                if(t.getErrorCode() == ConstantValue.ST_SUCCESS){
-                    showSuccessToast("登录成功！");
-                    mUserData.setValue(t);
-                }else {
-                    showFaillToast(t.getErrorMsg());
-                }
+                showSuccessToast("登录成功！");
+                mUserData.setValue(userBean);
+            }
+
+            @Override
+            public void onFaill(int what, String error) {
+                dismissLoading();
+                showFaillToast(error);
             }
         });
     }
 
-    public LiveData<RestResult<UserBean>> getLoginResult() {
+    public LiveData<UserBean> getLoginResult() {
         return mUserData;
     }
 }

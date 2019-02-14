@@ -21,7 +21,6 @@ import com.gs.keyboard.SecurityConfigure;
 import com.gs.keyboard.SecurityEditText;
 import com.gs.keyboard.SecurityKeyboard;
 import com.sgitg.common.base.AbstractDoubleClickOutActivity;
-import com.sgitg.common.http.RestResult;
 import com.sgitg.common.thread.MainThreadExcute;
 import com.sgitg.common.thread.ThreadManager;
 import com.sgitg.common.utils.KeyboardUtils;
@@ -53,12 +52,10 @@ public class AccountLoginActivity extends AbstractDoubleClickOutActivity {
     @Override
     protected ViewModel initViewModel() {
         mLoginViewModel = LViewModelProviders.of(this, LoginViewModel.class);
-        mLoginViewModel.getLoginResult().observe(AccountLoginActivity.this, new Observer<RestResult<UserBean>>() {
+        mLoginViewModel.getLoginResult().observe(AccountLoginActivity.this, new Observer<UserBean>() {
             @Override
-            public void onChanged(@Nullable RestResult<UserBean> userBeanRestResult) {
-                if (userBeanRestResult != null) {
-                    successLogin(userBeanRestResult.getData());
-                }
+            public void onChanged(@Nullable UserBean userBean) {
+                successLogin(userBean);
             }
         });
         return mLoginViewModel;

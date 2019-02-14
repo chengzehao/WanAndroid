@@ -15,10 +15,8 @@ import com.business.wanandroid.bean.HomeBannerBean;
 import com.business.wanandroid.viewmodel.HomeViewModel;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.sgitg.common.ConstantValue;
 import com.sgitg.common.base.AbstractLazyLoadListFragment;
 import com.sgitg.common.common.WebViewActivity;
-import com.sgitg.common.http.RestResult;
 import com.sgitg.common.imageloader.GlideImageLoader;
 import com.sgitg.common.viewmodel.LViewModelProviders;
 import com.youth.banner.Banner;
@@ -67,17 +65,15 @@ public class HomeFragment extends AbstractLazyLoadListFragment<HomeArticleBean.D
     public void loadData(final int pageIndex) {
         if (pageIndex == getInitPageIndex()) {
             mViewModel.loadHomeBannerBeans();
-            mViewModel.getHomeBannerBeans().observe(this, new Observer<RestResult<ArrayList<HomeBannerBean>>>() {
+            mViewModel.getHomeBannerBeans().observe(this, new Observer<ArrayList<HomeBannerBean>>() {
                 @Override
-                public void onChanged(@Nullable RestResult<ArrayList<HomeBannerBean>> arrayListRestResult) {
-                    if (arrayListRestResult == null) {
-                        return;
-                    }
-                    if (arrayListRestResult.getErrorCode() == ConstantValue.ST_SUCCESS) {
+                public void onChanged(@Nullable ArrayList<HomeBannerBean> homeBannerBeans) {
+                    fillBanner(homeBannerBeans);
+                    /*if (arrayListRestResult.getErrorCode() == ConstantValue.ST_SUCCESS) {
                         fillBanner(arrayListRestResult.getData());
                     } else {
                         onLoadDataError(true, "加载失败 " + arrayListRestResult.getErrorMsg());
-                    }
+                    }*/
                 }
             });
         } else {
@@ -109,18 +105,15 @@ public class HomeFragment extends AbstractLazyLoadListFragment<HomeArticleBean.D
 
     private void loadArticle(final int pageIndex) {
         mViewModel.loadHomeArticle(pageIndex);
-        mViewModel.getHomeArticleBean().observe(this, new Observer<RestResult<HomeArticleBean>>() {
+        mViewModel.getHomeArticleBean().observe(this, new Observer<HomeArticleBean>() {
             @Override
-            public void onChanged(@Nullable RestResult<HomeArticleBean> homeArticleBeanRestResult) {
-                if (homeArticleBeanRestResult == null) {
-                    return;
-                }
+            public void onChanged(@Nullable HomeArticleBean homeArticleBean) {
+                onLoadDataSuccess(pageIndex == getInitPageIndex(), homeArticleBean.getDatas());
+                /*if (homeArticleBeanRestResult.getErrorCode() == ConstantValue.ST_SUCCESS) {
 
-                if (homeArticleBeanRestResult.getErrorCode() == ConstantValue.ST_SUCCESS) {
-                    onLoadDataSuccess(pageIndex == getInitPageIndex(), homeArticleBeanRestResult.getData().getDatas());
                 } else {
                     onLoadDataError(pageIndex == getInitPageIndex(), "加载失败 " + homeArticleBeanRestResult.getErrorMsg());
-                }
+                }*/
             }
         });
     }

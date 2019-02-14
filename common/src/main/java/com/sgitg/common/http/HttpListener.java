@@ -9,11 +9,19 @@ package com.sgitg.common.http;
 public interface HttpListener<T> {
 
     /**
-     * 服务器返回
+     * 业务成功回调
      *
      * @param what 请求标识
      * @param t    返回数据
      */
-    void onResponse(int what, RestResult<T> t);
+    void onSuccess(int what, T t);
+
+    /**
+     * 业务失败回调
+     *
+     * @param what 请求标识
+     * @param error 失败消息
+     */
+    void onFaill(int what, String error);
 
 }
