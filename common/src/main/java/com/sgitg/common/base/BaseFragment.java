@@ -19,7 +19,9 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.github.javiersantos.materialstyleddialogs.enums.Style;
+import com.sgitg.common.ConstantValue;
 import com.sgitg.common.EventCenter;
+import com.sgitg.common.http.RestResult;
 import com.sgitg.common.utils.ToastUtils;
 import com.sgitg.common.viewmodel.BaseActionEvent;
 import com.sgitg.common.viewmodel.IViewModelAction;
@@ -336,6 +338,10 @@ public abstract class BaseFragment extends Fragment {
     @SuppressWarnings("unchecked")
     protected <T extends View> T getViewById(int id) {
         return (T) mContentView.findViewById(id);
+    }
+
+    protected <T> boolean checkHttpResult(RestResult<T> result) {
+        return result.getErrorCode() == ConstantValue.ST_SUCCESS;
     }
 
 }

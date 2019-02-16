@@ -15,9 +15,11 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.github.javiersantos.materialstyleddialogs.enums.Style;
+import com.sgitg.common.ConstantValue;
 import com.sgitg.common.EventCenter;
 import com.sgitg.common.LibApp;
 import com.sgitg.common.R;
+import com.sgitg.common.http.RestResult;
 import com.sgitg.common.utils.ToastUtils;
 import com.sgitg.common.viewmodel.BaseActionEvent;
 import com.sgitg.common.viewmodel.IViewModelAction;
@@ -297,6 +299,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
+    protected <T> boolean checkHttpResult(RestResult<T> result) {
+        return result.getErrorCode() == ConstantValue.ST_SUCCESS;
+    }
+
     @Override
     protected void onDestroy() {
         if (isBindEventBusHere()) {
@@ -307,4 +313,5 @@ public abstract class BaseActivity extends AppCompatActivity {
         this.mAlertDialog = null;
         super.onDestroy();
     }
+
 }

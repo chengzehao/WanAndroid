@@ -2,7 +2,6 @@ package com.business.wanandroid.fragment;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -17,6 +16,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sgitg.common.base.AbstractLazyLoadListFragment;
 import com.sgitg.common.common.WebViewActivity;
+import com.sgitg.common.http.RestResult;
 import com.sgitg.common.imageloader.GlideImageLoader;
 import com.sgitg.common.viewmodel.LViewModelProviders;
 import com.youth.banner.Banner;
@@ -40,28 +40,29 @@ public class HomeFragment extends AbstractLazyLoadListFragment<HomeArticleBean.D
     @Override
     protected ViewModel initViewModel() {
         mViewModel = LViewModelProviders.of(this, HomeViewModel.class);
-        mViewModel.getHomeBannerData().observe(this, new Observer<ArrayList<HomeBannerBean>>() {
+        mViewModel.getHomeBannerData().observe(this, new Observer<RestResult<ArrayList<HomeBannerBean>>>() {
             @Override
-            public void onChanged(@Nullable ArrayList<HomeBannerBean> homeBannerBeans) {
-                fillBanner(homeBannerBeans);
+            public void onChanged(@Nullable RestResult<ArrayList<HomeBannerBean>> restResult) {
+                if (restResult != null) {
+                    if (checkHttpResult(restResult)) {
+                        fillBanner(restResult.getData());
+                    } else {
+                        onLoadDataError(true, "加载失败 " + restResult.getErrorMsg());
+                    }
+                }
             }
         });
-        mViewModel.getLoadHomeBannerError().observe(this, new Observer<String>() {
+
+        mViewModel.getHomeArticle().observe(this, new Observer<RestResult<HomeArticleBean>>() {
             @Override
-            public void onChanged(@Nullable String s) {
-                onLoadDataError(true, "加载失败 " + s);
-            }
-        });
-        mViewModel.getHomeArticle().observe(this, new Observer<HomeArticleBean>() {
-            @Override
-            public void onChanged(@Nullable HomeArticleBean homeArticleBean) {
-                onLoadDataSuccess(getCurrentPageIndex() == getInitPageIndex(), homeArticleBean.getDatas());
-            }
-        });
-        mViewModel.getLoadHomeArticleError().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                onLoadDataError(getCurrentPageIndex() == getInitPageIndex(), "加载失败 " + s);
+            public void onChanged(@Nullable RestResult<HomeArticleBean> restResult) {
+                if (restResult != null) {
+                    if (checkHttpResult(restResult)) {
+                        onLoadDataSuccess(getCurrentPageIndex() == getInitPageIndex(), restResult.getData().getDatas());
+                    } else {
+                        onLoadDataError(getCurrentPageIndex() == getInitPageIndex(), "加载失败 " + restResult.getErrorMsg());
+                    }
+                }
             }
         });
         return mViewModel;
@@ -70,7 +71,6 @@ public class HomeFragment extends AbstractLazyLoadListFragment<HomeArticleBean.D
     @Override
     protected void setUpView() {
         super.setUpView();
-        mViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
         View mHeaderView = getHeaderView();
         mBanner = mHeaderView.findViewById(R.id.banner);
         mBanner.setImageLoader(new GlideImageLoader());

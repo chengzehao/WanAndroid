@@ -45,7 +45,7 @@ public class SplashActivity extends BaseActivity {
                             @Override
                             public void run() {
                                 CircularAnim.fullActivity(SplashActivity.this, findViewById(R.id.appName))
-                                        .colorOrImageRes(R.color.colorAccent)
+                                        .colorOrImageRes(R.color.light_color_blue)
                                         .go(new CircularAnim.OnAnimationEndListener() {
                                             @Override
                                             public void onAnimationEnd() {

@@ -2,7 +2,6 @@ package com.business.user.activity;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -21,6 +20,7 @@ import com.gs.keyboard.SecurityConfigure;
 import com.gs.keyboard.SecurityEditText;
 import com.gs.keyboard.SecurityKeyboard;
 import com.sgitg.common.base.AbstractDoubleClickOutActivity;
+import com.sgitg.common.http.RestResult;
 import com.sgitg.common.thread.MainThreadExcute;
 import com.sgitg.common.thread.ThreadManager;
 import com.sgitg.common.utils.KeyboardUtils;
@@ -52,10 +52,17 @@ public class AccountLoginActivity extends AbstractDoubleClickOutActivity {
     @Override
     protected ViewModel initViewModel() {
         mLoginViewModel = LViewModelProviders.of(this, LoginViewModel.class);
-        mLoginViewModel.getLoginResult().observe(AccountLoginActivity.this, new Observer<UserBean>() {
+        mLoginViewModel.getLoginResult().observe(AccountLoginActivity.this, new Observer<RestResult<UserBean>>() {
             @Override
-            public void onChanged(@Nullable UserBean userBean) {
-                successLogin(userBean);
+            public void onChanged(@Nullable RestResult<UserBean> restResult) {
+                if (restResult != null) {
+                    if (checkHttpResult(restResult)) {
+                        successLogin(restResult.getData());
+                    } else {
+                        ToastUtils.getInstance().showErrorInfoToast(restResult.getErrorMsg());
+                    }
+                }
+
             }
         });
         return mLoginViewModel;
@@ -64,7 +71,6 @@ public class AccountLoginActivity extends AbstractDoubleClickOutActivity {
     @Override
     protected void setUpView() {
         super.setUpView();
-        mLoginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
         Sofia.with(this).statusBarDarkFont().statusBarBackgroundAlpha(0).invasionStatusBar();
         mAccount = findViewById(R.id.account);
         mM = findViewById(R.id.mm);
@@ -108,7 +114,6 @@ public class AccountLoginActivity extends AbstractDoubleClickOutActivity {
                 MainThreadExcute.post(new Runnable() {
                     @Override
                     public void run() {
-                        dismissLoadingDialog();
                         toHome();
                     }
                 });
@@ -118,7 +123,7 @@ public class AccountLoginActivity extends AbstractDoubleClickOutActivity {
 
     private void toHome() {
         CircularAnim.fullActivity(this, mBtLogin)
-                .colorOrImageRes(R.color.colorAccent)
+                .colorOrImageRes(R.color.light_color_blue)
                 .go(new CircularAnim.OnAnimationEndListener() {
                     @Override
                     public void onAnimationEnd() {

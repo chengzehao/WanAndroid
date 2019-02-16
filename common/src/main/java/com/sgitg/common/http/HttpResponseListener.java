@@ -35,11 +35,7 @@ public class HttpResponseListener<T> implements OnResponseListener<RestResult<T>
     @Override
     public void onSucceed(int what, Response<RestResult<T>> response) {
         if (callback != null && !mRequest.isCanceled()) {
-            if (response.get().getErrorCode() == ConstantValue.ST_SUCCESS) {
-                callback.onSuccess(what, response.get().getData());
-            } else if (response.get().getErrorCode() == ConstantValue.ST_ERROR) {
-                callback.onFaill(what, response.get().getErrorMsg());
-            }
+            callback.onResponse(what, response.get());
         }
     }
 
@@ -59,7 +55,7 @@ public class HttpResponseListener<T> implements OnResponseListener<RestResult<T>
             errStr = "未知错误";
         }
         if (callback != null) {
-            callback.onFaill(what, errStr);
+            callback.onResponse(what, new RestResult<T>(ConstantValue.ST_ERROR, null, errStr));
         }
     }
 }

@@ -8,6 +8,7 @@ import com.business.user.bean.UserBean;
 import com.sgitg.common.http.CallServer;
 import com.sgitg.common.http.EntityRequest;
 import com.sgitg.common.http.HttpListener;
+import com.sgitg.common.http.RestResult;
 import com.sgitg.common.viewmodel.BaseViewModel;
 import com.yanzhenjie.nohttp.RequestMethod;
 
@@ -19,7 +20,7 @@ import com.yanzhenjie.nohttp.RequestMethod;
  */
 
 public class LoginViewModel extends BaseViewModel {
-    private MutableLiveData<UserBean> mUserData;
+    private MutableLiveData<RestResult<UserBean>> mUserData;
 
     public LoginViewModel() {
         mUserData = new MutableLiveData<>();
@@ -32,21 +33,14 @@ public class LoginViewModel extends BaseViewModel {
         request.add("password", password);
         CallServer.getInstance().request(0, request, new HttpListener<UserBean>() {
             @Override
-            public void onSuccess(int what, UserBean userBean) {
+            public void onResponse(int what, RestResult<UserBean> t) {
                 dismissLoading();
-                showSuccessToast("登录成功！");
-                mUserData.setValue(userBean);
-            }
-
-            @Override
-            public void onFaill(int what, String error) {
-                dismissLoading();
-                showFaillToast(error);
+                mUserData.setValue(t);
             }
         });
     }
 
-    public LiveData<UserBean> getLoginResult() {
+    public LiveData<RestResult<UserBean>> getLoginResult() {
         return mUserData;
     }
 }

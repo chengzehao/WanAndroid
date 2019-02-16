@@ -10,6 +10,7 @@ import com.sgitg.common.http.CallServer;
 import com.sgitg.common.http.EntityListRequest;
 import com.sgitg.common.http.EntityRequest;
 import com.sgitg.common.http.HttpListener;
+import com.sgitg.common.http.RestResult;
 import com.sgitg.common.viewmodel.BaseViewModel;
 import com.yanzhenjie.nohttp.RequestMethod;
 
@@ -24,16 +25,12 @@ import java.util.ArrayList;
  */
 
 public class HomeViewModel extends BaseViewModel {
-    private MutableLiveData<HomeArticleBean> mHomeArticleData;
-    private MutableLiveData<String> mLoadHomeArticleError;
-    private MutableLiveData<ArrayList<HomeBannerBean>> mHomeBannerData;
-    private MutableLiveData<String> mLoadHomeBannerError;
+    private MutableLiveData<RestResult<HomeArticleBean>> mHomeArticleData;
+    private MutableLiveData<RestResult<ArrayList<HomeBannerBean>>> mHomeBannerData;
 
     public HomeViewModel() {
         mHomeArticleData = new MutableLiveData<>();
-        mLoadHomeArticleError = new MutableLiveData<>();
         mHomeBannerData = new MutableLiveData<>();
-        mLoadHomeBannerError = new MutableLiveData<>();
     }
 
     public void loadHomeArticle(int pageIndex) {
@@ -41,45 +38,28 @@ public class HomeViewModel extends BaseViewModel {
         EntityRequest<HomeArticleBean> request = new EntityRequest<>(url, RequestMethod.GET, HomeArticleBean.class);
         CallServer.getInstance().request(0, request, new HttpListener<HomeArticleBean>() {
             @Override
-            public void onSuccess(int what, HomeArticleBean homeArticleBean) {
-                mHomeArticleData.setValue(homeArticleBean);
-            }
-
-            @Override
-            public void onFaill(int what, String error) {
-                mLoadHomeArticleError.setValue(error);
+            public void onResponse(int what, RestResult<HomeArticleBean> t) {
+                mHomeArticleData.setValue(t);
             }
         });
     }
 
-    public LiveData<HomeArticleBean> getHomeArticle() {
+    public LiveData<RestResult<HomeArticleBean>> getHomeArticle() {
         return mHomeArticleData;
-    }
-
-    public MutableLiveData<String> getLoadHomeArticleError() {
-        return mLoadHomeArticleError;
     }
 
     public void loadHomeBannerData() {
         EntityListRequest<HomeBannerBean> request = new EntityListRequest<>(Urls.HOME_BANNER, RequestMethod.GET, HomeBannerBean.class);
         CallServer.getInstance().request(0, request, new HttpListener<ArrayList<HomeBannerBean>>() {
             @Override
-            public void onSuccess(int what, ArrayList<HomeBannerBean> homeBannerBeans) {
-                mHomeBannerData.setValue(homeBannerBeans);
-            }
-
-            @Override
-            public void onFaill(int what, String error) {
-                mLoadHomeBannerError.setValue(error);
+            public void onResponse(int what, RestResult<ArrayList<HomeBannerBean>> t) {
+                mHomeBannerData.setValue(t);
             }
         });
     }
 
-    public LiveData<ArrayList<HomeBannerBean>> getHomeBannerData() {
+    public LiveData<RestResult<ArrayList<HomeBannerBean>>> getHomeBannerData() {
         return mHomeBannerData;
     }
 
-    public MutableLiveData<String> getLoadHomeBannerError() {
-        return mLoadHomeBannerError;
-    }
 }
