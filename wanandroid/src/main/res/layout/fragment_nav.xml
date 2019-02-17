@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<me.solidev.statusviewlayout.StatusViewLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/status_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_types"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:overScrollMode="never" />
+
+        <View
+            android:layout_width="0.3dp"
+            android:layout_height="match_parent"
+            android:background="@color/md_grey_300" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_navigation"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:overScrollMode="never" />
+    </LinearLayout>
+
+</me.solidev.statusviewlayout.StatusViewLayout>
