@@ -43,11 +43,9 @@ public abstract class AbstractRequest<T> extends Request<RestResult<T>> {
                             String data = bodyObject.getString(ConstantValue.NET_RESULTS);
                             T result = getResult(data);
                             return new RestResult<>(ConstantValue.ST_SUCCESS, result, "");
-                        } else if (bodyObject.getIntValue(ConstantValue.NET_STATE) == ConstantValue.ST_ERROR) {
+                        } else {
                             String error = bodyObject.getString(ConstantValue.NET_MSG);
                             return new RestResult<>(ConstantValue.ST_ERROR, null, error);
-                        } else {
-                            return new RestResult<>(ConstantValue.ST_ERROR, null, "服务返回状态码非法！");
                         }
                     } else {
                         return new RestResult<>(ConstantValue.ST_ERROR, null, "服务异常！请稍后重试.");

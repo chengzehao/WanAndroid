@@ -7,6 +7,8 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.business.wanandroid.Constants;
 import com.business.wanandroid.R;
 import com.business.wanandroid.fragment.HomeFragment;
+import com.business.wanandroid.fragment.ProjectTabFragment;
+import com.business.wanandroid.fragment.SystemCategoryFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 import com.sgitg.common.base.AbstractDoubleClickOutActivity;
@@ -21,8 +23,9 @@ import com.sgitg.common.common.TestFragment;
 @Route(path = "/WanAndroid/MainActivity")
 public class WanAndroidMainActivity extends AbstractDoubleClickOutActivity {
     private HomeFragment mHomeFragment;
-    private TestFragment mProjectFragment;
-    private TestFragment mSystemFragment;
+    private ProjectTabFragment mProjectFragment;
+    private SystemCategoryFragment mSystemFragment;
+    private TestFragment mNavFragment;
     private TestFragment mMineFragment;
 
     @Override
@@ -56,7 +59,7 @@ public class WanAndroidMainActivity extends AbstractDoubleClickOutActivity {
 
         } else if (tabId == R.id.tab_project) {
             if (mProjectFragment == null) {
-                mProjectFragment = TestFragment.newInstance("Project");
+                mProjectFragment = new ProjectTabFragment();
                 fragmentTransaction.add(R.id.container, mProjectFragment, Constants.PROJECT_TAG);
             } else {
                 fragmentTransaction.show(mProjectFragment);
@@ -64,12 +67,19 @@ public class WanAndroidMainActivity extends AbstractDoubleClickOutActivity {
 
         } else if (tabId == R.id.tab_system) {
             if (mSystemFragment == null) {
-                mSystemFragment = TestFragment.newInstance("System");
+                mSystemFragment = new SystemCategoryFragment();
                 fragmentTransaction.add(R.id.container, mSystemFragment, Constants.SYSTEM_TAG);
             } else {
                 fragmentTransaction.show(mSystemFragment);
             }
 
+        } else if (tabId == R.id.tab_nav) {
+            if (mNavFragment == null) {
+                mNavFragment = TestFragment.newInstance("Nav");
+                fragmentTransaction.add(R.id.container, mNavFragment, Constants.NAV_TAG);
+            } else {
+                fragmentTransaction.show(mNavFragment);
+            }
         } else if (tabId == R.id.tab_mine) {
             if (mMineFragment == null) {
                 mMineFragment = TestFragment.newInstance("Mine");
@@ -77,7 +87,6 @@ public class WanAndroidMainActivity extends AbstractDoubleClickOutActivity {
             } else {
                 fragmentTransaction.show(mMineFragment);
             }
-
         }
         fragmentTransaction.commit();
     }
@@ -93,6 +102,10 @@ public class WanAndroidMainActivity extends AbstractDoubleClickOutActivity {
         }
         if (mSystemFragment != null) {
             fragmentTransaction.hide(mSystemFragment);
+        }
+
+        if (mNavFragment != null) {
+            fragmentTransaction.hide(mNavFragment);
         }
 
         if (mMineFragment != null) {

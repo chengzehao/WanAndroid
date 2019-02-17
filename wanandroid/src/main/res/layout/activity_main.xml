@@ -47,6 +47,7 @@
         app:bb_activeTabColor="@color/colorAccent"
         app:bb_inActiveTabColor="@color/md_grey_400"
         app:bb_showShadow="true"
+        app:bb_behavior="shifting"
         app:bb_tabXmlResource="@xml/bottombar_tabs" />
 
 </LinearLayout>

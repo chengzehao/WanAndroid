@@ -11,5 +11,6 @@ public class Constants {
     public static final String HOME_TAG = "home";
     public static final String PROJECT_TAG = "work";
     public static final String SYSTEM_TAG = "video";
+    public static final String NAV_TAG = "nav";
     public static final String MINE_TAG = "mine";
 }

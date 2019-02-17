@@ -17,6 +17,11 @@
             title="体系" />
 
         <tab
+            icon="@mipmap/bottom_menu_nav"
+            id="@+id/tab_nav"
+            title="导航" />
+
+        <tab
             icon="@mipmap/bottom_menu_mine"
             id="@+id/tab_mine"
             title="我的" />

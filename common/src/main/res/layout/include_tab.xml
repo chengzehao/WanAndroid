@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/tab_layout"
     android:layout_width="match_parent"
-    android:layout_height="56dp"
+    android:layout_height="50dp"
     android:background="@color/md_white_1000"
-    app:tabMaxWidth="0dp"
     app:tabGravity="fill"
+    app:tabIndicatorColor="@color/colorAccent"
     app:tabIndicatorHeight="2dp"
+    app:tabMaxWidth="0dp"
     app:tabMode="scrollable"
-    app:tabIndicatorColor="@color/colorPrimary"
-    app:tabSelectedTextColor="@color/colorPrimary"
-    app:tabTextColor="@color/md_grey_500" />
+    app:tabSelectedTextColor="@color/colorAccent"
+    app:tabTextColor="@color/md_grey_400" />

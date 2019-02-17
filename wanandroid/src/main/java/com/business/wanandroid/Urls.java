@@ -29,5 +29,24 @@ public class Urls {
      */
     public static final String HOME_BANNER = SERVER_URL + File.separator + "banner" + File.separator + "json";
 
+    /**
+     * 项目分类
+     */
+    public static final String PROJECT_CATEGORY = SERVER_URL + File.separator + "project" + File.separator + "tree"+ File.separator + "json";
+
+    /**
+     * 项目列表
+     */
+    public static final String PROJECT_LIST = SERVER_URL + File.separator + "project" + File.separator + "list";
+
+    /**
+     * 体系分类
+     */
+    public static final String SYSTEM_CATEGORY = SERVER_URL + File.separator + "tree" + File.separator + "json";
+
+    /**
+     * 体系列表
+     */
+    public static final String SYSTEM_LIST = SERVER_URL + File.separator + "article" + File.separator + "list";
 
 }
