@@ -59,4 +59,24 @@
     <color name="md_light_green_300">#aed581</color>
     <color name="md_light_green_100">#bbe58a</color>
     <color name="light_blue_line">#cadffc</color>
+
+    <!--public static final String RED = "F44336";
+    public static final String LIGHTBLUE = "03A9F4";
+    public static final String AMBER = "FFC107";
+    public static final String ORANGE = "FF9800";
+    public static final String YELLOW = "FFEB3B";
+    public static final String LIME = "CDDC39";
+    public static final String BLUE = "2196F3";
+    public static final String INDIGO = "3F51B5";
+    public static final String LIGHTGREEN = "8BC34A";
+    public static final String GREY = "9E9E9E";
+    public static final String DEEPPURPLE = "673AB7";
+    public static final String TEAL = "009688";
+    public static final String CYAN = "00BCD4";-->
+
+    <color name="tag_bg_red">#33F44336</color>
+    <color name="tag_bd_red">#88F44336</color>
+    <color name="tag_bg_lightblue">#3303A9F4</color>
+    <color name="tag_bd_lightblue">#8803A9F4</color>
+
 </resources>
