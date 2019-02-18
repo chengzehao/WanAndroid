@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.business.wanandroid.bean.SystemCategoryBean;
-import com.business.wanandroid.fragment.SystemListFragment;
+import com.business.wanandroid.fragment.SystemTabFragment;
 import com.sgitg.common.base.AbstractToolbarActivity;
 
 /**
@@ -14,12 +14,14 @@ import com.sgitg.common.base.AbstractToolbarActivity;
  * @date 2019/2/17/017 17:03
  */
 
-public class SystemListActivity extends AbstractToolbarActivity {
-    private SystemCategoryBean.ChildrenBean mBean;
+public class SystemTabActivity extends AbstractToolbarActivity {
+    private SystemCategoryBean mBean;
+    private int mPos;
 
     @Override
     protected void getBundleExtras(Bundle extras) {
-        mBean = (SystemCategoryBean.ChildrenBean) extras.getSerializable("DATA");
+        mBean = (SystemCategoryBean) extras.getSerializable("DATA");
+        mPos = extras.getInt("POS");
     }
 
     @Override
@@ -29,6 +31,6 @@ public class SystemListActivity extends AbstractToolbarActivity {
 
     @Override
     protected Fragment getFragment() {
-        return SystemListFragment.newInstance(mBean);
+        return SystemTabFragment.newInstance(mBean, mPos);
     }
 }

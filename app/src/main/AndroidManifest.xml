@@ -52,7 +52,7 @@
             android:launchMode="singleTask" />
 
         <activity android:name="com.sgitg.common.common.WebViewActivity" />
-        <activity android:name="com.business.wanandroid.activity.SystemListActivity" />
+        <activity android:name="com.business.wanandroid.activity.SystemTabActivity" />
 
     </application>
 </manifest>

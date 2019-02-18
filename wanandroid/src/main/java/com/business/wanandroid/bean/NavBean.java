@@ -18,6 +18,7 @@ public class NavBean {
 
     private int cid;
     private String name;
+    private boolean selected;
     private List<ArticlesBean> articles;
 
     public int getCid() {
@@ -34,6 +35,14 @@ public class NavBean {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     public List<ArticlesBean> getArticles() {

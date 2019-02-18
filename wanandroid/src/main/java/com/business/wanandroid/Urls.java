@@ -49,4 +49,9 @@ public class Urls {
      */
     public static final String SYSTEM_LIST = SERVER_URL + File.separator + "article" + File.separator + "list";
 
+    /**
+     * 导航数据
+     */
+    public static final String NAV = SERVER_URL + File.separator + "navi" + File.separator + "json";
+
 }

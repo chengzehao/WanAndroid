@@ -7,6 +7,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.business.wanandroid.Constants;
 import com.business.wanandroid.R;
 import com.business.wanandroid.fragment.HomeFragment;
+import com.business.wanandroid.fragment.NavFragment;
 import com.business.wanandroid.fragment.ProjectTabFragment;
 import com.business.wanandroid.fragment.SystemCategoryFragment;
 import com.roughike.bottombar.BottomBar;
@@ -25,7 +26,7 @@ public class WanAndroidMainActivity extends AbstractDoubleClickOutActivity {
     private HomeFragment mHomeFragment;
     private ProjectTabFragment mProjectFragment;
     private SystemCategoryFragment mSystemFragment;
-    private TestFragment mNavFragment;
+    private NavFragment mNavFragment;
     private TestFragment mMineFragment;
 
     @Override
@@ -75,7 +76,7 @@ public class WanAndroidMainActivity extends AbstractDoubleClickOutActivity {
 
         } else if (tabId == R.id.tab_nav) {
             if (mNavFragment == null) {
-                mNavFragment = TestFragment.newInstance("Nav");
+                mNavFragment = new NavFragment();
                 fragmentTransaction.add(R.id.container, mNavFragment, Constants.NAV_TAG);
             } else {
                 fragmentTransaction.show(mNavFragment);

@@ -3,7 +3,7 @@ package com.business.wanandroid.adapter;
 import android.os.Bundle;
 
 import com.business.wanandroid.R;
-import com.business.wanandroid.activity.SystemListActivity;
+import com.business.wanandroid.activity.SystemTabActivity;
 import com.business.wanandroid.bean.SystemCategoryBean;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -34,8 +34,9 @@ public class SystemCategoryAdapter extends BaseQuickAdapter<SystemCategoryBean, 
             @Override
             public void onTagClick(int position, String text) {
                 Bundle b = new Bundle();
-                b.putSerializable("DATA", bean.getChildren().get(position));
-                ((BaseActivity) mContext).readyGo(SystemListActivity.class, b);
+                b.putSerializable("DATA", bean);
+                b.putInt("POS",position);
+                ((BaseActivity) mContext).readyGo(SystemTabActivity.class, b);
             }
 
             @Override

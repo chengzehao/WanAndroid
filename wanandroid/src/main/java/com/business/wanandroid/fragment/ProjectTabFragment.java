@@ -33,17 +33,17 @@ public class ProjectTabFragment extends BaseFragment {
 
     @Override
     protected ViewModel initViewModel() {
-        mViewModel= LViewModelProviders.of(this,ProjectCategoryViewModel.class);
+        mViewModel = LViewModelProviders.of(this, ProjectCategoryViewModel.class);
         mViewModel.getProjectCategory().observe(this, new Observer<RestResult<ArrayList<ProjectCategoryBean>>>() {
             @Override
-            public void onChanged(@Nullable RestResult<ArrayList<ProjectCategoryBean>> arrayListRestResult) {
-                if(checkHttpResult(arrayListRestResult)){
+            public void onChanged(@Nullable final RestResult<ArrayList<ProjectCategoryBean>> arrayListRestResult) {
+                if (checkHttpResult(arrayListRestResult)) {
                     ProjectTabAdapter adapter = new ProjectTabAdapter(getChildFragmentManager(), arrayListRestResult.getData());
+                    statusView.showContent();
                     viewPager.setAdapter(adapter);
                     viewPager.setOffscreenPageLimit(arrayListRestResult.getData().size() - 1);
                     tabLayout.setupWithViewPager(viewPager);
-                    statusView.showContent();
-                }else{
+                } else {
                     statusView.showError(arrayListRestResult.getErrorMsg());
                 }
             }
@@ -67,11 +67,11 @@ public class ProjectTabFragment extends BaseFragment {
                 setUpData();
             }
         });
-        statusView.showLoading();
     }
 
     @Override
     protected void setUpData() {
+        statusView.showLoading();
         mViewModel.loadProjectCategory();
     }
 }
