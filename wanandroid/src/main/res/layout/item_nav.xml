@@ -25,7 +25,7 @@
         app:tag_border_color="@color/md_grey_300"
         app:tag_clickable="true"
         app:tag_max_length="100"
-        app:tag_ripple_duration="300"
+        app:tag_ripple_duration="100"
         app:tag_text_size="16sp"
         app:tag_theme="random"
         app:vertical_interval="16dp" />
