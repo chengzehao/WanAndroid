@@ -2,7 +2,6 @@ package com.business.wanandroid.fragment;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,16 +28,15 @@ import me.solidev.statusviewlayout.StatusViewLayout;
  * @date 2019/2/17/017 22:17
  */
 
-public class NavFragment extends BaseFragment implements BaseQuickAdapter.OnItemChildClickListener {
+public class NavFragment extends BaseFragment {
     private StatusViewLayout mStatusViewLayout;
-    private RecyclerView recyclerTypes;
     private RecyclerView recyclerNavigation;
+    private RecyclerView recyclerTypes;
     private NavAdapter navAdapter;
     private NavTypeAdapter typeAdapter;
 
     private NavViewModel mViewMoel;
     private ArrayList<NavBean> mNavBeans;
-    private boolean shouldScroll;
     private int currPos;
 
     @Override
@@ -48,55 +46,18 @@ public class NavFragment extends BaseFragment implements BaseQuickAdapter.OnItem
             @Override
             public void onChanged(@Nullable RestResult<ArrayList<NavBean>> navBeanRestResult) {
                 if (checkHttpResult(navBeanRestResult)) {
+                    mStatusViewLayout.showContent();
                     mNavBeans = navBeanRestResult.getData();
-                    onLoadNavSuccess(navBeanRestResult.getData());
+                    currPos = 0;
+                    mNavBeans.get(currPos).setSelected(true);
+                    navAdapter.setNewData(mNavBeans);
+                    typeAdapter.setNewData(mNavBeans);
                 } else {
                     mStatusViewLayout.showError(navBeanRestResult.getErrorMsg());
                 }
             }
         });
         return mViewMoel;
-    }
-
-    private RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
-        @Override
-        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-            super.onScrolled(recyclerView, dx, dy);
-            if (shouldScroll) {
-                return;
-            }
-            int firstVisibleItemPosition = getFirstVisibleItemPosition();
-            if (currPos != firstVisibleItemPosition) {
-                selectItem(firstVisibleItemPosition);
-                scrollToPosition(recyclerTypes, currPos, true, false);
-            }
-        }
-
-        @Override
-        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-            super.onScrollStateChanged(recyclerView, newState);
-            if (shouldScroll && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                shouldScroll = false;
-                scrollToPosition(recyclerNavigation, currPos, false, true);
-            }
-        }
-    };
-
-    private RecyclerView.OnScrollListener onTypeScrollListener = new RecyclerView.OnScrollListener() {
-        @Override
-        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-            super.onScrollStateChanged(recyclerView, newState);
-            if (shouldScroll && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                shouldScroll = false;
-                scrollToPosition(recyclerTypes, currPos, false, true);
-            }
-        }
-    };
-
-    private void onLoadNavSuccess(ArrayList<NavBean> data) {
-        mStatusViewLayout.showContent();
-        navAdapter.setNewData(data);
-        typeAdapter.setNewData(data);
     }
 
     @Override
@@ -114,14 +75,41 @@ public class NavFragment extends BaseFragment implements BaseQuickAdapter.OnItem
         recyclerNavigation.setLayoutManager(new LinearLayoutManager(getActivity()));
         navAdapter = new NavAdapter();
         recyclerNavigation.setAdapter(navAdapter);
-        recyclerNavigation.addOnScrollListener(onScrollListener);
+        recyclerNavigation.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (mNavBeans != null && mNavBeans.size() > 0) {
+                    if (mNavBeans.get(getFirstVisibleItemPosition()).getCid() != mNavBeans.get(currPos).getCid()) {
+                        for (int i = 0; i < mNavBeans.size(); i++) {
+                            if (mNavBeans.get(getFirstVisibleItemPosition()).getCid() == mNavBeans.get(i).getCid()) {
+                                selectItem(i);
+                                recyclerTypes.smoothScrollToPosition(i);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        });
 
         recyclerTypes.setLayoutManager(new LinearLayoutManager(getActivity()));
         typeAdapter = new NavTypeAdapter();
-        typeAdapter.setOnItemChildClickListener(this);
         recyclerTypes.setAdapter(typeAdapter);
-        recyclerTypes.addOnScrollListener(onTypeScrollListener);
-
+        typeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                selectItem(position);
+                int firstVisibleItemPosition = getFirstVisibleItemPosition();
+                if (currPos != firstVisibleItemPosition) {
+                    recyclerNavigation.smoothScrollToPosition(currPos);
+                }
+            }
+        });
         mStatusViewLayout.setOnRetryListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,14 +124,6 @@ public class NavFragment extends BaseFragment implements BaseQuickAdapter.OnItem
         mViewMoel.loadNav();
     }
 
-    private int getFirstVisibleItemPosition() {
-        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerNavigation.getLayoutManager();
-        if (layoutManager == null) {
-            return 0;
-        }
-        return layoutManager.findFirstVisibleItemPosition();
-    }
-
     private void selectItem(int position) {
         if (position < 0 || mNavBeans.size() < position) {
             return;
@@ -154,48 +134,11 @@ public class NavFragment extends BaseFragment implements BaseQuickAdapter.OnItem
         typeAdapter.notifyDataSetChanged();
     }
 
-    private void scrollToPosition(RecyclerView recyclerView, int position, boolean needSmooth, boolean itemInScreenNeedScroll) {
-        int firstItem = recyclerView.getChildLayoutPosition(recyclerView.getChildAt(0));
-        int lastItem = recyclerView.getChildLayoutPosition(recyclerView.getChildAt(recyclerView.getChildCount() - 1));
-        if (position < firstItem) {
-            //在屏幕上方，直接滚上去就是顶部
-            if (needSmooth) {
-                recyclerView.smoothScrollToPosition(position);
-            } else {
-                recyclerView.scrollToPosition(position);
-            }
-        } else if (position <= lastItem) {
-            if (itemInScreenNeedScroll) {
-                //在屏幕中，直接滚动到相应位置的顶部
-                int movePosition = position - firstItem;
-                if (movePosition >= 0 && movePosition < recyclerView.getChildCount()) {
-                    //粘性头部，会占据一定的top空间，所以真是的top位置应该是减去粘性header的高度
-                    int top = recyclerView.getChildAt(movePosition).getTop();
-                    if (needSmooth) {
-                        recyclerView.smoothScrollBy(0, top);
-                    } else {
-                        recyclerView.scrollBy(0, top);
-                    }
-                }
-            }
-        } else {
-            //在屏幕下方，需要西安滚动到屏幕内，在校验
-            shouldScroll = true;
-            if (needSmooth) {
-                recyclerView.smoothScrollToPosition(position);
-            } else {
-                recyclerView.scrollToPosition(position);
-            }
-            currPos = position;
+    private int getFirstVisibleItemPosition() {
+        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerNavigation.getLayoutManager();
+        if (layoutManager == null) {
+            return 0;
         }
-    }
-
-    @Override
-    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-        selectItem(position);
-        int firstVisibleItemPosition = getFirstVisibleItemPosition();
-        if (currPos != firstVisibleItemPosition) {
-            scrollToPosition(recyclerNavigation, currPos, true, true);
-        }
+        return layoutManager.findFirstVisibleItemPosition();
     }
 }
