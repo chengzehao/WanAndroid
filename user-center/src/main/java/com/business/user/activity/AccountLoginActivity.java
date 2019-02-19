@@ -19,7 +19,9 @@ import com.gs.keyboard.KeyboardType;
 import com.gs.keyboard.SecurityConfigure;
 import com.gs.keyboard.SecurityEditText;
 import com.gs.keyboard.SecurityKeyboard;
-import com.sgitg.common.base.AbstractDoubleClickOutActivity;
+import com.sgitg.common.ConstantValue;
+import com.sgitg.common.EventCenter;
+import com.sgitg.common.base.BaseActivity;
 import com.sgitg.common.http.RestResult;
 import com.sgitg.common.thread.MainThreadExcute;
 import com.sgitg.common.thread.ThreadManager;
@@ -28,6 +30,8 @@ import com.sgitg.common.utils.StringUtils;
 import com.sgitg.common.utils.ToastUtils;
 import com.sgitg.common.viewmodel.LViewModelProviders;
 import com.yanzhenjie.sofia.Sofia;
+
+import org.greenrobot.eventbus.EventBus;
 
 import top.wefor.circularanim.CircularAnim;
 
@@ -38,7 +42,7 @@ import top.wefor.circularanim.CircularAnim;
  * @date 2019/1/12/012 21:38
  */
 @Route(path = "/User/AccountLoginActivity")
-public class AccountLoginActivity extends AbstractDoubleClickOutActivity {
+public class AccountLoginActivity extends BaseActivity {
     private LoginViewModel mLoginViewModel;
     private SecurityEditText mAccount;
     private SecurityEditText mM;
@@ -114,6 +118,7 @@ public class AccountLoginActivity extends AbstractDoubleClickOutActivity {
                 MainThreadExcute.post(new Runnable() {
                     @Override
                     public void run() {
+                        EventBus.getDefault().post(new EventCenter<>(ConstantValue.EVENT_LOGIN_SUCCESS));
                         toHome();
                     }
                 });

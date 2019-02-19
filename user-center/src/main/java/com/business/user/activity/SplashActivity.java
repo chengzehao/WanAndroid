@@ -3,13 +3,11 @@ package com.business.user.activity;
 import android.os.Looper;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.business.user.Authority;
 import com.business.user.R;
 import com.business.user.utils.AntiHijackingUtils;
 import com.sgitg.common.base.BaseActivity;
 import com.sgitg.common.thread.MainThreadExcute;
 import com.sgitg.common.thread.ThreadManager;
-import com.sgitg.common.utils.StringUtils;
 import com.sgitg.common.utils.ToastUtils;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
@@ -49,13 +47,8 @@ public class SplashActivity extends BaseActivity {
                                         .go(new CircularAnim.OnAnimationEndListener() {
                                             @Override
                                             public void onAnimationEnd() {
-                                                String username = Authority.getUserName();
-                                                if (StringUtils.isNullOrEmpty(username)) {
-                                                    readyGoThenKill(AccountLoginActivity.class);
-                                                } else {
-                                                    ARouter.getInstance().build("/WanAndroid/MainActivity").navigation();
-                                                    finish();
-                                                }
+                                                ARouter.getInstance().build("/WanAndroid/MainActivity").navigation();
+                                                finish();
                                             }
                                         });
                             }

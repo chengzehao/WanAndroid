@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/img_des"
+        android:scaleType="centerCrop"
+        android:src="@drawable/home_bg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="40dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/login"
+            style="@style/Text.Size14ColorAccent"
+            android:drawablePadding="5dp"
+            android:drawableTop="@mipmap/user"
+            android:text="请您登录" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:layout_margin="16dp"
+            android:background="@color/md_grey_300" />
+
+        <Button
+            android:id="@+id/my_collect"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="我的收藏"
+            android:theme="@style/AccentColorButtonTheme" />
+
+        <Button
+            android:id="@+id/todo"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="我的TODO"
+            android:theme="@style/AccentColorButtonTheme" />
+
+        <Button
+            android:id="@+id/logout"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="注销登录"
+            android:theme="@style/AccentColorButtonTheme" />
+
+
+    </LinearLayout>
+
+
+</FrameLayout>

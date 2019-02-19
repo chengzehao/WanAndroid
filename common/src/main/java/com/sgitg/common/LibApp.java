@@ -46,8 +46,8 @@ public class LibApp extends MultiDexApplication {
         InitializationConfig config = InitializationConfig.newBuilder(this)
                 .connectionTimeout(20 * 1000)
                 .readTimeout(20 * 1000)
-                .cacheStore(new DBCacheStore(this).setEnable(false))
-                .cookieStore(new DBCookieStore(this).setEnable(false))
+                .cacheStore(new DBCacheStore(this).setEnable(true))
+                .cookieStore(new DBCookieStore(this).setEnable(true))
                 .retry(0)
                 .build();
         NoHttp.initialize(config);

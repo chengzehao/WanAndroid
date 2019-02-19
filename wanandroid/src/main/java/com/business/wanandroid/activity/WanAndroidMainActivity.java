@@ -7,13 +7,12 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.business.wanandroid.Constants;
 import com.business.wanandroid.R;
 import com.business.wanandroid.fragment.HomeFragment;
-import com.business.wanandroid.fragment.NavFragment;
+import com.business.wanandroid.fragment.MineFragment;
 import com.business.wanandroid.fragment.ProjectTabFragment;
 import com.business.wanandroid.fragment.SystemCategoryFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 import com.sgitg.common.base.AbstractDoubleClickOutActivity;
-import com.sgitg.common.common.TestFragment;
 
 /**
  * 描述：
@@ -26,8 +25,7 @@ public class WanAndroidMainActivity extends AbstractDoubleClickOutActivity {
     private HomeFragment mHomeFragment;
     private ProjectTabFragment mProjectFragment;
     private SystemCategoryFragment mSystemFragment;
-    private NavFragment mNavFragment;
-    private TestFragment mMineFragment;
+    private MineFragment mMineFragment;
 
     @Override
     protected int setLayoutResourceID() {
@@ -74,16 +72,9 @@ public class WanAndroidMainActivity extends AbstractDoubleClickOutActivity {
                 fragmentTransaction.show(mSystemFragment);
             }
 
-        } else if (tabId == R.id.tab_nav) {
-            if (mNavFragment == null) {
-                mNavFragment = new NavFragment();
-                fragmentTransaction.add(R.id.container, mNavFragment, Constants.NAV_TAG);
-            } else {
-                fragmentTransaction.show(mNavFragment);
-            }
         } else if (tabId == R.id.tab_mine) {
             if (mMineFragment == null) {
-                mMineFragment = TestFragment.newInstance("Mine");
+                mMineFragment = new MineFragment();
                 fragmentTransaction.add(R.id.container, mMineFragment, Constants.MINE_TAG);
             } else {
                 fragmentTransaction.show(mMineFragment);
@@ -103,10 +94,6 @@ public class WanAndroidMainActivity extends AbstractDoubleClickOutActivity {
         }
         if (mSystemFragment != null) {
             fragmentTransaction.hide(mSystemFragment);
-        }
-
-        if (mNavFragment != null) {
-            fragmentTransaction.hide(mNavFragment);
         }
 
         if (mMineFragment != null) {

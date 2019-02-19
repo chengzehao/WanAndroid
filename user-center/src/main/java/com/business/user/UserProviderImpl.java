@@ -22,7 +22,7 @@ public class UserProviderImpl implements UserProvider {
 
     @Override
     public void logoutServer(HttpListener<String> listener) {
-        StringRequest request = new StringRequest(Urls.LOGOUT, RequestMethod.POST);
+        StringRequest request = new StringRequest(Urls.LOGOUT, RequestMethod.GET);
         CallServer.getInstance().request(0, request, listener);
     }
 

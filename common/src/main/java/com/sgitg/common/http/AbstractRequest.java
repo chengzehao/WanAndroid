@@ -1,8 +1,10 @@
 package com.sgitg.common.http;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sgitg.common.ConstantValue;
+import com.sgitg.common.route.UserProvider;
 import com.yanzhenjie.nohttp.Headers;
 import com.yanzhenjie.nohttp.Logger;
 import com.yanzhenjie.nohttp.RequestMethod;
@@ -43,7 +45,11 @@ public abstract class AbstractRequest<T> extends Request<RestResult<T>> {
                             String data = bodyObject.getString(ConstantValue.NET_RESULTS);
                             T result = getResult(data);
                             return new RestResult<>(ConstantValue.ST_SUCCESS, result, "");
-                        } else {
+                        }else if(bodyObject.getIntValue(ConstantValue.NET_STATE) == ConstantValue.ST_NEED_LOGIN){
+                            String error = bodyObject.getString(ConstantValue.NET_MSG);
+                            ((UserProvider) ARouter.getInstance().build("/User/Service").navigation()).toLogin();
+                            return new RestResult<>(ConstantValue.ST_ERROR, null, error);
+                        }else {
                             String error = bodyObject.getString(ConstantValue.NET_MSG);
                             return new RestResult<>(ConstantValue.ST_ERROR, null, error);
                         }
