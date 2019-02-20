@@ -53,6 +53,7 @@
 
         <activity android:name="com.sgitg.common.common.WebViewActivity" />
         <activity android:name="com.business.wanandroid.activity.SystemTabActivity" />
+        <activity android:name="com.business.wanandroid.activity.CollectActivity" />
 
     </application>
 </manifest>

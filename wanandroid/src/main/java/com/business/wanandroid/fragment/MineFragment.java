@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.business.wanandroid.R;
+import com.business.wanandroid.activity.CollectActivity;
 import com.sgitg.common.ConstantValue;
 import com.sgitg.common.EventCenter;
 import com.sgitg.common.base.BaseFragment;
@@ -44,13 +45,23 @@ public class MineFragment extends BaseFragment {
         my_collect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                final String username = ((UserProvider) ARouter.getInstance().build("/User/Service").navigation()).getUserName();
+                if (StringUtils.isNullOrEmpty(username)) {
+                    ((UserProvider) ARouter.getInstance().build("/User/Service").navigation()).toLogin();
+                } else {
+                    readyGo(CollectActivity.class);
+                }
             }
         });
         todo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                final String username = ((UserProvider) ARouter.getInstance().build("/User/Service").navigation()).getUserName();
+                if (StringUtils.isNullOrEmpty(username)) {
+                    ((UserProvider) ARouter.getInstance().build("/User/Service").navigation()).toLogin();
+                } else {
 
+                }
             }
         });
     }

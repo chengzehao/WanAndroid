@@ -40,10 +40,6 @@ public abstract class AbstractLazyLoadListFragment<T> extends AbstractLazyLoadFr
         super.setUpView();
         mPageSize = getPageSize();
         mCurrentPageIndex = getInitPageIndex();
-        mAdapter = createAdapter();
-        if (mAdapter == null) {
-            throw new IllegalAccessError("请设置适配器！");
-        }
         mStatusViewLayout = getContentView().findViewById(R.id.status_view);
         mRecyclerView = getContentView().findViewById(R.id.rv_list);
         mSwipeRefreshLayout = getContentView().findViewById(R.id.swipeLayout);
@@ -51,6 +47,10 @@ public abstract class AbstractLazyLoadListFragment<T> extends AbstractLazyLoadFr
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getMContext()));
         boolean mIsRefreshAndLoadMoreEnabled = isRefreshAndLoadMoreEnabled();
         mSwipeRefreshLayout.setEnabled(mIsRefreshAndLoadMoreEnabled);
+        mAdapter = createAdapter();
+        if (mAdapter == null) {
+            throw new IllegalAccessError("请设置适配器！");
+        }
         mRecyclerView.setAdapter(mAdapter);
 
         mStatusViewLayout.setOnRetryListener(new View.OnClickListener() {

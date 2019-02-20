@@ -60,8 +60,19 @@ public class Urls {
     public static final String COLLECT = SERVER_URL + File.separator + "lg" + File.separator + "collect";
 
     /**
-     * 取消收藏文章
+     * 取消收藏文章-文章界面
      */
     public static final String UNCOLLECT = SERVER_URL + File.separator + "lg" + File.separator + "uncollect_originId";
+
+    /**
+     * 取消收藏文章-收藏界面
+     */
+    public static final String UNCOLLECT2 = SERVER_URL + File.separator + "lg" + File.separator + "uncollect";
+
+
+    /**
+     * 收藏文章列表
+     */
+    public static final String COLLECT_LIST = SERVER_URL + File.separator + "lg" + File.separator + "collect"+ File.separator + "list";
 
 }
