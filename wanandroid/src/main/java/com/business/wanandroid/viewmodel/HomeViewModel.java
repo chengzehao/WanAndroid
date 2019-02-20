@@ -11,6 +11,7 @@ import com.sgitg.common.http.EntityListRequest;
 import com.sgitg.common.http.EntityRequest;
 import com.sgitg.common.http.HttpListener;
 import com.sgitg.common.http.RestResult;
+import com.sgitg.common.http.StringRequest;
 import com.sgitg.common.viewmodel.BaseViewModel;
 import com.yanzhenjie.nohttp.RequestMethod;
 
@@ -27,10 +28,14 @@ import java.util.ArrayList;
 public class HomeViewModel extends BaseViewModel {
     private MutableLiveData<RestResult<HomeArticleBean>> mHomeArticleData;
     private MutableLiveData<RestResult<ArrayList<HomeBannerBean>>> mHomeBannerData;
+    private MutableLiveData<RestResult<String>> mCollectResult;
+    private MutableLiveData<RestResult<String>> mUnCollectResult;
 
     public HomeViewModel() {
         mHomeArticleData = new MutableLiveData<>();
         mHomeBannerData = new MutableLiveData<>();
+        mCollectResult = new MutableLiveData<>();
+        mUnCollectResult = new MutableLiveData<>();
     }
 
     public void loadHomeArticle(int pageIndex) {
@@ -62,4 +67,37 @@ public class HomeViewModel extends BaseViewModel {
         return mHomeBannerData;
     }
 
+    public void collect(String id) {
+        startLoading("提交中");
+        String url = Urls.COLLECT + File.separator + id + File.separator + "json";
+        StringRequest request = new StringRequest(url, RequestMethod.POST);
+        CallServer.getInstance().request(0, request, new HttpListener<String>() {
+            @Override
+            public void onResponse(int what, RestResult<String> t) {
+                dismissLoading();
+                mCollectResult.setValue(t);
+            }
+        });
+    }
+
+    public MutableLiveData<RestResult<String>> getCollectResult() {
+        return mCollectResult;
+    }
+
+    public void unCollect(String id) {
+        startLoading("提交中");
+        String url = Urls.UNCOLLECT + File.separator + id + File.separator + "json";
+        StringRequest request = new StringRequest(url, RequestMethod.POST);
+        CallServer.getInstance().request(0, request, new HttpListener<String>() {
+            @Override
+            public void onResponse(int what, RestResult<String> t) {
+                dismissLoading();
+                mUnCollectResult.setValue(t);
+            }
+        });
+    }
+
+    public MutableLiveData<RestResult<String>> getUnCollectResult() {
+        return mUnCollectResult;
+    }
 }

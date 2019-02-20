@@ -34,5 +34,11 @@ public class ArticleAdapter extends BaseQuickAdapter<HomeArticleBean.DatasBean, 
             helper.getView(R.id.iv_img).setVisibility(View.VISIBLE);
             ImageLoader.displayImage((ImageView) helper.getView(R.id.iv_img), bean.getEnvelopePic());
         }
+        if (bean.isCollect()) {
+            helper.setImageResource(R.id.star, R.mipmap.ic_collection);
+        } else {
+            helper.setImageResource(R.id.star, R.mipmap.ic_collection_gray);
+        }
+        helper.addOnClickListener(R.id.star);
     }
 }

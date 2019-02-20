@@ -63,6 +63,11 @@ public class UserProviderImpl implements UserProvider {
     }
 
     @Override
+    public String getCollectIds() {
+        return Authority.getCollectIds();
+    }
+
+    @Override
     public void init(Context context) {
 
     }

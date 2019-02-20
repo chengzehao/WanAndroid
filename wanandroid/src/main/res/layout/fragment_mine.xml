@@ -22,10 +22,9 @@
 
         <TextView
             android:id="@+id/login"
-            style="@style/Text.Size14ColorAccent"
+            style="@style/Text.Size18ColorAccent"
             android:drawablePadding="5dp"
-            android:drawableTop="@mipmap/user"
-            android:text="请您登录" />
+            android:drawableTop="@mipmap/user" />
 
         <View
             android:layout_width="match_parent"

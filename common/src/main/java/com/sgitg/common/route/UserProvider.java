@@ -27,4 +27,6 @@ public interface UserProvider extends IProvider {
 
     String getUserToken();
 
+    String getCollectIds();
+
 }

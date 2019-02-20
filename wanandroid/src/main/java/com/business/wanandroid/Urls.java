@@ -54,4 +54,14 @@ public class Urls {
      */
     public static final String NAV = SERVER_URL + File.separator + "navi" + File.separator + "json";
 
+    /**
+     * 收藏文章
+     */
+    public static final String COLLECT = SERVER_URL + File.separator + "lg" + File.separator + "collect";
+
+    /**
+     * 取消收藏文章
+     */
+    public static final String UNCOLLECT = SERVER_URL + File.separator + "lg" + File.separator + "uncollect_originId";
+
 }

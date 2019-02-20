@@ -118,7 +118,7 @@ public class AccountLoginActivity extends BaseActivity {
                 MainThreadExcute.post(new Runnable() {
                     @Override
                     public void run() {
-                        EventBus.getDefault().post(new EventCenter<>(ConstantValue.EVENT_LOGIN_SUCCESS));
+                        EventBus.getDefault().post(new EventCenter<>(ConstantValue.EVENT_LOGIN_SUCCESS,user.getUsername()));
                         toHome();
                     }
                 });

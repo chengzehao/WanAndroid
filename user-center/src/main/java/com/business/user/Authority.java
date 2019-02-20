@@ -1,7 +1,10 @@
 package com.business.user;
 
+import com.alibaba.fastjson.JSON;
 import com.business.user.bean.UserBean;
 import com.sgitg.common.LibApp;
+
+import java.util.List;
 
 /**
  * Authority 用户信息维护工具
@@ -9,19 +12,20 @@ import com.sgitg.common.LibApp;
  * @author 周麟
  * @created 2018/1/4 9:57
  */
-//@Route(path = "/author/util")
 public class Authority {
 
     public static void login(UserBean userBean) {
         setUserId(userBean.getId());
         setUserName(userBean.getUsername());
         setToken(userBean.getToken());
+        setCollectIds(JSON.toJSONString(userBean.getCollectIds()));
     }
 
     public static void clearSp() {
         setUserId(0);
         setUserName("");
         setToken("");
+        setCollectIds("");
     }
 
     private static void setUserId(int userId) {
@@ -46,5 +50,13 @@ public class Authority {
 
     public static String getToken() {
         return LibApp.getInstance().getSharedPreferences().getString("Token", "");
+    }
+
+    private static void setCollectIds(String ids) {
+        LibApp.getInstance().getSharedPreferences().edit().putString("CollectIds", ids).apply();
+    }
+
+    public static String getCollectIds() {
+        return LibApp.getInstance().getSharedPreferences().getString("CollectIds", "");
     }
 }

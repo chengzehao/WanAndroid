@@ -67,7 +67,7 @@ public class MineFragment extends BaseFragment {
                         if (StringUtils.isNullOrEmpty(username)) {
                             notLogin();
                         } else {
-                            logined();
+                            logined(username);
                         }
                     }
                 });
@@ -86,26 +86,32 @@ public class MineFragment extends BaseFragment {
         logout.setOnClickListener(null);
     }
 
-    private void logined() {
-        login.setText(((UserProvider) ARouter.getInstance().build("/User/Service").navigation()).getUserName());
+    private void logined(String username) {
+        login.setText(username);
         login.setOnClickListener(null);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showLoadingDialog("正在注销");
-                ((UserProvider) ARouter.getInstance().build("/User/Service").navigation()).logoutServer(new HttpListener<String>() {
-                    @Override
-                    public void onResponse(int what, RestResult<String> t) {
-                        dismissLoadingDialog();
-                        if (checkHttpResult(t)) {
-                            EventBus.getDefault().post(new EventCenter<>(ConstantValue.EVENT_LOGOUT_SUCCESS));
-                            ((UserProvider) ARouter.getInstance().build("/User/Service").navigation()).clearSp();
-                            notLogin();
-                        } else {
-                            ToastUtils.getInstance().showErrorInfoToast(t.getErrorMsg());
-                        }
-                    }
-                });
+                showAlertDialog(0, "注销登录", "您确定清空当前账户信息吗？", "确定", "取消", R.color.colorAccent);
+            }
+        });
+    }
+
+    @Override
+    public void onPositive(int dialogId) {
+        showLoadingDialog("正在注销");
+        ((UserProvider) ARouter.getInstance().build("/User/Service").navigation()).logoutServer(new HttpListener<String>() {
+            @Override
+            public void onResponse(int what, RestResult<String> t) {
+                dismissLoadingDialog();
+                if (checkHttpResult(t)) {
+                    EventBus.getDefault().post(new EventCenter<>(ConstantValue.EVENT_LOGOUT_SUCCESS));
+                    ((UserProvider) ARouter.getInstance().build("/User/Service").navigation()).clearSp();
+                    notLogin();
+                    ToastUtils.getInstance().showSuccessInfoToast("注销成功！");
+                } else {
+                    ToastUtils.getInstance().showErrorInfoToast(t.getErrorMsg());
+                }
             }
         });
     }
@@ -119,7 +125,7 @@ public class MineFragment extends BaseFragment {
     protected void onEventComming(EventCenter eventCenter) {
         super.onEventComming(eventCenter);
         if (eventCenter.getEventCode() == ConstantValue.EVENT_LOGIN_SUCCESS) {
-            logined();
+            logined((String) eventCenter.getData());
         }
     }
 }
