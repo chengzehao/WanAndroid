@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.business.wanandroid.adapter.CollectAdapter;
 import com.business.wanandroid.bean.CollectBean;
 import com.business.wanandroid.viewmodel.CollectViewModel;
@@ -16,12 +17,17 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
 import com.chad.library.adapter.base.listener.OnItemSwipeListener;
+import com.sgitg.common.ConstantValue;
+import com.sgitg.common.EventCenter;
 import com.sgitg.common.base.AbstractLazyLoadListFragment;
 import com.sgitg.common.common.WebViewActivity;
 import com.sgitg.common.http.RestResult;
+import com.sgitg.common.route.UserProvider;
 import com.sgitg.common.utils.ToastUtils;
 import com.sgitg.common.viewmodel.LViewModelProviders;
 import com.yanzhenjie.nohttp.Logger;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * 描述：
@@ -31,8 +37,8 @@ import com.yanzhenjie.nohttp.Logger;
  */
 
 public class CollectFragment extends AbstractLazyLoadListFragment<CollectBean.DatasBean> {
-
     private CollectViewModel viewModel;
+    private int cancelCollectId;
 
     @Override
     protected ViewModel initViewModel() {
@@ -52,12 +58,20 @@ public class CollectFragment extends AbstractLazyLoadListFragment<CollectBean.Da
             public void onChanged(@Nullable RestResult<String> stringRestResult) {
                 if (checkHttpResult(stringRestResult)) {
                     ToastUtils.getInstance().showSuccessInfoToast("已取消收藏");
+                    removeCollectIdFromSp(cancelCollectId);
+                    EventBus.getDefault().post(new EventCenter<>(ConstantValue.EVENT_REFRESH_COLLECT));
                 } else {
                     ToastUtils.getInstance().showErrorInfoToast(stringRestResult.getErrorMsg());
                 }
             }
         });
         return viewModel;
+    }
+
+    private void removeCollectIdFromSp(int id) {
+        UserProvider userProvider = ((UserProvider) ARouter.getInstance().build("/User/Service").navigation());
+        userProvider.removeCollectId(id);
+        Logger.i(userProvider.getCollectIdList());
     }
 
     @Override
@@ -110,6 +124,7 @@ public class CollectFragment extends AbstractLazyLoadListFragment<CollectBean.Da
         public void onItemSwiped(RecyclerView.ViewHolder viewHolder, int pos) {
             Logger.i("onItemSwiped:" + pos);
             CollectBean.DatasBean bean = getmAdapter().getData().get(pos);
+            cancelCollectId = bean.getOriginId();
             viewModel.unCollect(bean.getId(), bean.getOriginId());
         }
 

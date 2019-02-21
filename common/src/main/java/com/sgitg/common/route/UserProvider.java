@@ -3,6 +3,8 @@ package com.sgitg.common.route;
 import com.alibaba.android.arouter.facade.template.IProvider;
 import com.sgitg.common.http.HttpListener;
 
+import java.util.List;
+
 /**
  * 描述：
  *
@@ -23,10 +25,10 @@ public interface UserProvider extends IProvider {
 
     String getUserName();
 
-    int getUserId();
+    List<Integer> getCollectIdList();
 
-    String getUserToken();
+    void addCollectId(int id);
 
-    String getCollectIds();
+    void removeCollectId(int id);
 
 }

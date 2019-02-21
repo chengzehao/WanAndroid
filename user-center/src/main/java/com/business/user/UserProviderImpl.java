@@ -4,12 +4,19 @@ import android.content.Context;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.business.user.bean.UserBean;
 import com.sgitg.common.LibApp;
 import com.sgitg.common.http.CallServer;
 import com.sgitg.common.http.HttpListener;
 import com.sgitg.common.http.StringRequest;
 import com.sgitg.common.route.UserProvider;
+import com.yanzhenjie.nohttp.Logger;
 import com.yanzhenjie.nohttp.RequestMethod;
+
+import org.litepal.LitePal;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 描述：
@@ -28,7 +35,7 @@ public class UserProviderImpl implements UserProvider {
 
     @Override
     public void clearSp() {
-        Authority.clearSp();
+        LitePal.deleteAll(UserBean.class);
     }
 
     @Override
@@ -47,25 +54,66 @@ public class UserProviderImpl implements UserProvider {
         return Urls.LOGIN;
     }
 
+    private UserBean getUser() {
+        List<UserBean> userBeans = LitePal.findAll(UserBean.class);
+        if (userBeans != null && userBeans.size() > 0) {
+            return userBeans.get(0);
+        }
+        return null;
+    }
+
     @Override
     public String getUserName() {
-        return Authority.getUserName();
+        if (getUser() != null) {
+            return getUser().getUsername();
+        }
+        return "";
     }
 
     @Override
-    public int getUserId() {
-        return Authority.getUserId();
+    public List<Integer> getCollectIdList() {
+        if (getUser() != null) {
+            return getUser().getCollectIds();
+        }
+        return null;
     }
 
     @Override
-    public String getUserToken() {
-        return Authority.getToken();
+    public void addCollectId(int id) {
+        List<Integer> cs = getCollectIdList();
+        if (cs == null) {
+            cs = new ArrayList<>();
+        }
+        cs.add(id);
+        UserBean u = getUser();
+        if (u != null) {
+            u.setCollectIds(cs);
+            u.update(u.getId());
+        }
     }
 
     @Override
-    public String getCollectIds() {
-        return Authority.getCollectIds();
+    public void removeCollectId(int id) {
+        List<Integer> cs = getCollectIdList();
+        UserBean u = getUser();
+        if (cs == null) {
+            return;
+        }
+        List<Integer> temp = new ArrayList<>();
+        for (Integer c : cs) {
+            if (c != id) {
+                temp.add(c);
+            }
+        }
+        Logger.i("temp:" + temp);
+        if (u != null) {
+            u.setCollectIds(temp);
+            Logger.i("getCollectIds:" + u.getCollectIds());
+            u.update(u.getId());
+            Logger.i(getCollectIdList());
+        }
     }
+
 
     @Override
     public void init(Context context) {

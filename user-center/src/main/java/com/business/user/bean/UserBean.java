@@ -1,5 +1,7 @@
 package com.business.user.bean;
 
+import org.litepal.crud.LitePalSupport;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -9,7 +11,7 @@ import java.util.List;
  * @author 周麟
  * @date 2018/7/24/024 22:09
  */
-public class UserBean implements Serializable {
+public class UserBean extends LitePalSupport implements Serializable {
     private int id;
     private String username;
     private String password;

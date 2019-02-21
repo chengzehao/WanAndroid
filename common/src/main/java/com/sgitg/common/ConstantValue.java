@@ -33,4 +33,5 @@ public class ConstantValue {
     private static final int EVENT_BEGIN = 0X100;
     public static final int EVENT_LOGIN_SUCCESS = EVENT_BEGIN + 10;
     public static final int EVENT_LOGOUT_SUCCESS = EVENT_BEGIN + 20;
+    public static final int EVENT_REFRESH_COLLECT = EVENT_BEGIN + 30;
 }

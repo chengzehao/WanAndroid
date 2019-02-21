@@ -8,8 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
 import com.business.wanandroid.R;
 import com.business.wanandroid.adapter.ArticleAdapter;
 import com.business.wanandroid.bean.HomeArticleBean;
@@ -26,6 +24,7 @@ import com.sgitg.common.imageloader.GlideImageLoader;
 import com.sgitg.common.route.UserProvider;
 import com.sgitg.common.utils.ToastUtils;
 import com.sgitg.common.viewmodel.LViewModelProviders;
+import com.yanzhenjie.nohttp.Logger;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
@@ -78,6 +77,7 @@ public class HomeFragment extends AbstractLazyLoadListFragment<HomeArticleBean.D
             public void onChanged(@Nullable RestResult<String> stringRestResult) {
                 if (checkHttpResult(stringRestResult)) {
                     getmAdapter().getData().get(mCollectPos).setCollect(true);
+                    addCollectIdToSp(getmAdapter().getData().get(mCollectPos).getId());
                     getmAdapter().notifyDataSetChanged();
                 } else {
                     ToastUtils.getInstance().showErrorInfoToast(stringRestResult.getErrorMsg());
@@ -89,6 +89,7 @@ public class HomeFragment extends AbstractLazyLoadListFragment<HomeArticleBean.D
             public void onChanged(@Nullable RestResult<String> stringRestResult) {
                 if (checkHttpResult(stringRestResult)) {
                     getmAdapter().getData().get(mCollectPos).setCollect(false);
+                    removeCollectIdFromSp(getmAdapter().getData().get(mCollectPos).getId());
                     getmAdapter().notifyDataSetChanged();
                 } else {
                     ToastUtils.getInstance().showErrorInfoToast(stringRestResult.getErrorMsg());
@@ -96,6 +97,18 @@ public class HomeFragment extends AbstractLazyLoadListFragment<HomeArticleBean.D
             }
         });
         return mViewModel;
+    }
+
+    private void removeCollectIdFromSp(int id) {
+        UserProvider userProvider = ((UserProvider) ARouter.getInstance().build("/User/Service").navigation());
+        userProvider.removeCollectId(id);
+        Logger.i("removeCollectIdFromSp:"+userProvider.getCollectIdList());
+    }
+
+    private void addCollectIdToSp(int id) {
+        UserProvider userProvider = ((UserProvider) ARouter.getInstance().build("/User/Service").navigation());
+        userProvider.addCollectId(id);
+        Logger.i(userProvider.getCollectIdList());
     }
 
     @Override
@@ -185,22 +198,30 @@ public class HomeFragment extends AbstractLazyLoadListFragment<HomeArticleBean.D
 
     @Override
     protected void onEventComming(EventCenter eventCenter) {
-        if (eventCenter.getEventCode() == ConstantValue.EVENT_LOGIN_SUCCESS) {
-            String collectIds = ((UserProvider) ARouter.getInstance().build("/User/Service").navigation()).getCollectIds();
-            ArrayList<Integer> collects = JSON.parseObject(collectIds, new TypeReference<ArrayList<Integer>>() {
-            });
-            for (Integer collect : collects) {
-                for (HomeArticleBean.DatasBean datasBean : getmAdapter().getData()) {
-                    if (collect == datasBean.getId()) {
-                        datasBean.setCollect(true);
+        if (eventCenter.getEventCode() == ConstantValue.EVENT_LOGIN_SUCCESS || eventCenter.getEventCode() == ConstantValue.EVENT_REFRESH_COLLECT) {
+            UserProvider userProvider = ((UserProvider) ARouter.getInstance().build("/User/Service").navigation());
+            List<Integer> collectList = userProvider.getCollectIdList();
+            if(collectList==null){
+                setAllCollectFalse();
+            }else{
+                setAllCollectFalse();
+                for (Integer collect : collectList) {
+                    for (HomeArticleBean.DatasBean datasBean : getmAdapter().getData()) {
+                        if (collect == datasBean.getId()) {
+                            datasBean.setCollect(true);
+                        }
                     }
                 }
             }
         } else if (eventCenter.getEventCode() == ConstantValue.EVENT_LOGOUT_SUCCESS) {
-            for (HomeArticleBean.DatasBean datasBean : getmAdapter().getData()) {
-                datasBean.setCollect(false);
-            }
+            setAllCollectFalse();
         }
         getmAdapter().notifyDataSetChanged();
+    }
+
+    private void setAllCollectFalse(){
+        for (HomeArticleBean.DatasBean datasBean : getmAdapter().getData()) {
+            datasBean.setCollect(false);
+        }
     }
 }

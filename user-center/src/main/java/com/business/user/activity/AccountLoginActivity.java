@@ -10,7 +10,6 @@ import android.widget.RelativeLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.business.user.Authority;
 import com.business.user.R;
 import com.business.user.bean.UserBean;
 import com.business.user.utils.AntiHijackingUtils;
@@ -114,11 +113,11 @@ public class AccountLoginActivity extends BaseActivity {
         ThreadManager.getLongPool().execute(new Runnable() {
             @Override
             public void run() {
-                Authority.login(user);
+                user.save();
                 MainThreadExcute.post(new Runnable() {
                     @Override
                     public void run() {
-                        EventBus.getDefault().post(new EventCenter<>(ConstantValue.EVENT_LOGIN_SUCCESS,user.getUsername()));
+                        EventBus.getDefault().post(new EventCenter<>(ConstantValue.EVENT_LOGIN_SUCCESS, user.getUsername()));
                         toHome();
                     }
                 });
