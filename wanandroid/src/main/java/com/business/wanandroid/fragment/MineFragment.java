@@ -53,17 +53,6 @@ public class MineFragment extends BaseFragment {
                 }
             }
         });
-        todo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final String username = ((UserProvider) ARouter.getInstance().build("/User/Service").navigation()).getUserName();
-                if (StringUtils.isNullOrEmpty(username)) {
-                    ((UserProvider) ARouter.getInstance().build("/User/Service").navigation()).toLogin();
-                } else {
-
-                }
-            }
-        });
     }
 
     @Override
