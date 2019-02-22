@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.business.user.R;
 import com.business.user.bean.UserBean;
 import com.business.user.utils.AntiHijackingUtils;
@@ -19,9 +18,9 @@ import com.gs.keyboard.KeyboardType;
 import com.gs.keyboard.SecurityConfigure;
 import com.gs.keyboard.SecurityEditText;
 import com.gs.keyboard.SecurityKeyboard;
-import com.sgitg.common.ConstantValue;
-import com.sgitg.common.EventCenter;
 import com.sgitg.common.base.BaseActivity;
+import com.sgitg.common.event.EventCenter;
+import com.sgitg.common.event.EventCode;
 import com.sgitg.common.http.RestResult;
 import com.sgitg.common.thread.MainThreadExcute;
 import com.sgitg.common.thread.ThreadManager;
@@ -32,8 +31,6 @@ import com.sgitg.common.viewmodel.LViewModelProviders;
 import com.yanzhenjie.sofia.Sofia;
 
 import org.greenrobot.eventbus.EventBus;
-
-import top.wefor.circularanim.CircularAnim;
 
 /**
  * 描述：
@@ -46,7 +43,6 @@ public class AccountLoginActivity extends BaseActivity {
     private LoginViewModel mLoginViewModel;
     private EditText mAccount;
     private SecurityEditText mM;
-    private Button mBtLogin;
 
     @Override
     protected int setLayoutResourceID() {
@@ -78,7 +74,7 @@ public class AccountLoginActivity extends BaseActivity {
         Sofia.with(this).statusBarDarkFont().statusBarBackgroundAlpha(0).invasionStatusBar();
         mAccount = findViewById(R.id.account);
         mM = findViewById(R.id.mm);
-        mBtLogin = findViewById(R.id.bt_login);
+        Button mBtLogin = findViewById(R.id.bt_login);
         RelativeLayout mRootView = findViewById(R.id.root);
         SecurityConfigure configure = new SecurityConfigure().setDefaultKeyboardType(KeyboardType.NUMBER);
         new SecurityKeyboard(mRootView, configure);
@@ -118,24 +114,12 @@ public class AccountLoginActivity extends BaseActivity {
                 MainThreadExcute.post(new Runnable() {
                     @Override
                     public void run() {
-                        EventBus.getDefault().post(new EventCenter<>(ConstantValue.EVENT_LOGIN_SUCCESS, user.getUsername()));
-                        toHome();
+                        EventBus.getDefault().post(new EventCenter<>(EventCode.EVENT_LOGIN_SUCCESS, user.getUsername()));
+                        finish();
                     }
                 });
             }
         });
-    }
-
-    private void toHome() {
-        CircularAnim.fullActivity(this, mBtLogin)
-                .colorOrImageRes(R.color.light_color_blue)
-                .go(new CircularAnim.OnAnimationEndListener() {
-                    @Override
-                    public void onAnimationEnd() {
-                        ARouter.getInstance().build("/WanAndroid/MainActivity").navigation();
-                        finish();
-                    }
-                });
     }
 
     @Override
@@ -163,5 +147,17 @@ public class AccountLoginActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected boolean isBindEventBusHere() {
+        return true;
+    }
+
+    @Override
+    protected void onEventComming(EventCenter eventCenter) {
+        if (eventCenter.getEventCode() == EventCode.EVENT_REGISTER_SUCCESS) {
+            finish();
+        }
     }
 }

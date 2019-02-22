@@ -15,8 +15,8 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.github.javiersantos.materialstyleddialogs.enums.Style;
-import com.sgitg.common.ConstantValue;
-import com.sgitg.common.EventCenter;
+import com.sgitg.common.http.HttpConfig;
+import com.sgitg.common.event.EventCenter;
 import com.sgitg.common.LibApp;
 import com.sgitg.common.R;
 import com.sgitg.common.http.RestResult;
@@ -300,7 +300,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected <T> boolean checkHttpResult(RestResult<T> result) {
-        return result.getErrorCode() == ConstantValue.ST_SUCCESS;
+        return result.getErrorCode() == HttpConfig.ST_SUCCESS;
     }
 
     @Override

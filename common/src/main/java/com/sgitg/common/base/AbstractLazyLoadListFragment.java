@@ -8,7 +8,7 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.sgitg.common.ConstantValue;
+import com.sgitg.common.http.HttpConfig;
 import com.sgitg.common.R;
 
 import java.util.List;
@@ -102,7 +102,7 @@ public abstract class AbstractLazyLoadListFragment<T> extends AbstractLazyLoadFr
     }
 
     protected int getPageSize() {
-        return ConstantValue.PAGENUM;
+        return HttpConfig.PAGENUM;
     }
 
     /**

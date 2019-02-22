@@ -20,7 +20,7 @@ public class Urls {
 
 
     /**
-     * ISC登录验证
+     * 登录验证
      */
     public static final String LOGIN = SERVER_URL + File.separator + "user" + File.separator + "login";
 
@@ -28,5 +28,10 @@ public class Urls {
      * 注销
      */
     public static final String LOGOUT = SERVER_URL + File.separator + "user" + File.separator + "logout" + File.separator + "json" ;
+
+    /**
+     * 注册
+     */
+    public static final String REGISTER = SERVER_URL + File.separator + "user" + File.separator + "register";
 
 }

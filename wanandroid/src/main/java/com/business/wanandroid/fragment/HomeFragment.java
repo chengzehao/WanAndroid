@@ -15,8 +15,8 @@ import com.business.wanandroid.bean.HomeBannerBean;
 import com.business.wanandroid.viewmodel.HomeViewModel;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.sgitg.common.ConstantValue;
-import com.sgitg.common.EventCenter;
+import com.sgitg.common.event.EventCenter;
+import com.sgitg.common.event.EventCode;
 import com.sgitg.common.base.AbstractLazyLoadListFragment;
 import com.sgitg.common.common.WebViewActivity;
 import com.sgitg.common.http.RestResult;
@@ -198,7 +198,7 @@ public class HomeFragment extends AbstractLazyLoadListFragment<HomeArticleBean.D
 
     @Override
     protected void onEventComming(EventCenter eventCenter) {
-        if (eventCenter.getEventCode() == ConstantValue.EVENT_LOGIN_SUCCESS || eventCenter.getEventCode() == ConstantValue.EVENT_REFRESH_COLLECT) {
+        if (eventCenter.getEventCode() == EventCode.EVENT_LOGIN_SUCCESS || eventCenter.getEventCode() == EventCode.EVENT_REFRESH_COLLECT) {
             UserProvider userProvider = ((UserProvider) ARouter.getInstance().build("/User/Service").navigation());
             List<Integer> collectList = userProvider.getCollectIdList();
             if (collectList == null) {
@@ -213,7 +213,7 @@ public class HomeFragment extends AbstractLazyLoadListFragment<HomeArticleBean.D
                     }
                 }
             }
-        } else if (eventCenter.getEventCode() == ConstantValue.EVENT_LOGOUT_SUCCESS) {
+        } else if (eventCenter.getEventCode() == EventCode.EVENT_LOGOUT_SUCCESS) {
             setAllCollectFalse();
         }
         getmAdapter().notifyDataSetChanged();

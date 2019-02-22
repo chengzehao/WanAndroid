@@ -17,8 +17,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
 import com.chad.library.adapter.base.listener.OnItemSwipeListener;
-import com.sgitg.common.ConstantValue;
-import com.sgitg.common.EventCenter;
+import com.sgitg.common.event.EventCenter;
+import com.sgitg.common.event.EventCode;
 import com.sgitg.common.base.AbstractLazyLoadListFragment;
 import com.sgitg.common.common.WebViewActivity;
 import com.sgitg.common.http.RestResult;
@@ -59,7 +59,7 @@ public class CollectFragment extends AbstractLazyLoadListFragment<CollectBean.Da
                 if (checkHttpResult(stringRestResult)) {
                     ToastUtils.getInstance().showSuccessInfoToast("已取消收藏");
                     removeCollectIdFromSp(cancelCollectId);
-                    EventBus.getDefault().post(new EventCenter<>(ConstantValue.EVENT_REFRESH_COLLECT));
+                    EventBus.getDefault().post(new EventCenter<>(EventCode.EVENT_REFRESH_COLLECT));
                 } else {
                     ToastUtils.getInstance().showErrorInfoToast(stringRestResult.getErrorMsg());
                 }

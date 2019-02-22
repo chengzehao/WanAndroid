@@ -12,8 +12,8 @@ import com.business.wanandroid.bean.ProjectBean;
 import com.business.wanandroid.viewmodel.ProjectViewModel;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.sgitg.common.ConstantValue;
-import com.sgitg.common.EventCenter;
+import com.sgitg.common.event.EventCenter;
+import com.sgitg.common.event.EventCode;
 import com.sgitg.common.base.AbstractLazyLoadListFragment;
 import com.sgitg.common.common.WebViewActivity;
 import com.sgitg.common.http.RestResult;
@@ -151,7 +151,7 @@ public class ProjectsFragment extends AbstractLazyLoadListFragment<ProjectBean.D
 
     @Override
     protected void onEventComming(EventCenter eventCenter) {
-        if (eventCenter.getEventCode() == ConstantValue.EVENT_LOGIN_SUCCESS || eventCenter.getEventCode() == ConstantValue.EVENT_REFRESH_COLLECT) {
+        if (eventCenter.getEventCode() == EventCode.EVENT_LOGIN_SUCCESS || eventCenter.getEventCode() == EventCode.EVENT_REFRESH_COLLECT) {
             UserProvider userProvider = ((UserProvider) ARouter.getInstance().build("/User/Service").navigation());
             List<Integer> collectList = userProvider.getCollectIdList();
             if (collectList == null) {
@@ -166,7 +166,7 @@ public class ProjectsFragment extends AbstractLazyLoadListFragment<ProjectBean.D
                     }
                 }
             }
-        } else if (eventCenter.getEventCode() == ConstantValue.EVENT_LOGOUT_SUCCESS) {
+        } else if (eventCenter.getEventCode() == EventCode.EVENT_LOGOUT_SUCCESS) {
             setAllCollectFalse();
         }
         getmAdapter().notifyDataSetChanged();

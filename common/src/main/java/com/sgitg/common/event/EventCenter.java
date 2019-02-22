@@ -1,4 +1,4 @@
-package com.sgitg.common;
+package com.sgitg.common.event;
 
 /**
  * EventCenter 事件模型

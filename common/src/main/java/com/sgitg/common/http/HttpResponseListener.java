@@ -1,6 +1,5 @@
 package com.sgitg.common.http;
 
-import com.sgitg.common.ConstantValue;
 import com.yanzhenjie.nohttp.error.NetworkError;
 import com.yanzhenjie.nohttp.error.TimeoutError;
 import com.yanzhenjie.nohttp.error.URLError;
@@ -55,7 +54,7 @@ public class HttpResponseListener<T> implements OnResponseListener<RestResult<T>
             errStr = "未知错误";
         }
         if (callback != null) {
-            callback.onResponse(what, new RestResult<T>(ConstantValue.ST_ERROR, null, errStr));
+            callback.onResponse(what, new RestResult<T>(HttpConfig.ST_ERROR, null, errStr));
         }
     }
 }

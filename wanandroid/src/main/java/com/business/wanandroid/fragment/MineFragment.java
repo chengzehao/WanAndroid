@@ -7,8 +7,8 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.business.wanandroid.R;
 import com.business.wanandroid.activity.CollectActivity;
-import com.sgitg.common.ConstantValue;
-import com.sgitg.common.EventCenter;
+import com.sgitg.common.event.EventCenter;
+import com.sgitg.common.event.EventCode;
 import com.sgitg.common.base.BaseFragment;
 import com.sgitg.common.http.HttpListener;
 import com.sgitg.common.http.RestResult;
@@ -105,7 +105,7 @@ public class MineFragment extends BaseFragment {
             public void onResponse(int what, RestResult<String> t) {
                 dismissLoadingDialog();
                 if (checkHttpResult(t)) {
-                    EventBus.getDefault().post(new EventCenter<>(ConstantValue.EVENT_LOGOUT_SUCCESS));
+                    EventBus.getDefault().post(new EventCenter<>(EventCode.EVENT_LOGOUT_SUCCESS));
                     ((UserProvider) ARouter.getInstance().build("/User/Service").navigation()).clearSp();
                     notLogin();
                     ToastUtils.getInstance().showSuccessInfoToast("注销成功！");
@@ -124,7 +124,7 @@ public class MineFragment extends BaseFragment {
     @Override
     protected void onEventComming(EventCenter eventCenter) {
         super.onEventComming(eventCenter);
-        if (eventCenter.getEventCode() == ConstantValue.EVENT_LOGIN_SUCCESS) {
+        if (eventCenter.getEventCode() == EventCode.EVENT_LOGIN_SUCCESS) {
             logined((String) eventCenter.getData());
         }
     }
