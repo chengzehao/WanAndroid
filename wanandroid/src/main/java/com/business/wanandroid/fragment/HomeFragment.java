@@ -102,7 +102,7 @@ public class HomeFragment extends AbstractLazyLoadListFragment<HomeArticleBean.D
     private void removeCollectIdFromSp(int id) {
         UserProvider userProvider = ((UserProvider) ARouter.getInstance().build("/User/Service").navigation());
         userProvider.removeCollectId(id);
-        Logger.i("removeCollectIdFromSp:"+userProvider.getCollectIdList());
+        Logger.i("removeCollectIdFromSp:" + userProvider.getCollectIdList());
     }
 
     private void addCollectIdToSp(int id) {
@@ -201,9 +201,9 @@ public class HomeFragment extends AbstractLazyLoadListFragment<HomeArticleBean.D
         if (eventCenter.getEventCode() == ConstantValue.EVENT_LOGIN_SUCCESS || eventCenter.getEventCode() == ConstantValue.EVENT_REFRESH_COLLECT) {
             UserProvider userProvider = ((UserProvider) ARouter.getInstance().build("/User/Service").navigation());
             List<Integer> collectList = userProvider.getCollectIdList();
-            if(collectList==null){
+            if (collectList == null) {
                 setAllCollectFalse();
-            }else{
+            } else {
                 setAllCollectFalse();
                 for (Integer collect : collectList) {
                     for (HomeArticleBean.DatasBean datasBean : getmAdapter().getData()) {
@@ -219,7 +219,7 @@ public class HomeFragment extends AbstractLazyLoadListFragment<HomeArticleBean.D
         getmAdapter().notifyDataSetChanged();
     }
 
-    private void setAllCollectFalse(){
+    private void setAllCollectFalse() {
         for (HomeArticleBean.DatasBean datasBean : getmAdapter().getData()) {
             datasBean.setCollect(false);
         }

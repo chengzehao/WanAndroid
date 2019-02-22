@@ -4,7 +4,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.business.wanandroid.R;
-import com.business.wanandroid.bean.HomeArticleBean;
 import com.business.wanandroid.bean.ProjectBean;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -35,5 +34,11 @@ public class ProjectAdapter extends BaseQuickAdapter<ProjectBean.DatasBean, Base
             helper.getView(R.id.iv_img).setVisibility(View.VISIBLE);
             ImageLoader.displayImage((ImageView) helper.getView(R.id.iv_img), bean.getEnvelopePic());
         }
+        if (bean.isCollect()) {
+            helper.setImageResource(R.id.star, R.mipmap.ic_collection);
+        } else {
+            helper.setImageResource(R.id.star, R.mipmap.ic_collection_gray);
+        }
+        helper.addOnClickListener(R.id.star);
     }
 }

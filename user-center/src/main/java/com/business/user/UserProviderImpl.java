@@ -105,12 +105,14 @@ public class UserProviderImpl implements UserProvider {
                 temp.add(c);
             }
         }
-        Logger.i("temp:" + temp);
         if (u != null) {
-            u.setCollectIds(temp);
-            Logger.i("getCollectIds:" + u.getCollectIds());
-            u.update(u.getId());
-            Logger.i(getCollectIdList());
+            if (temp.size() == 0) {
+                u.setToDefault("collectIds");
+                u.update(u.getId());
+            } else {
+                u.setCollectIds(temp);
+                u.update(u.getId());
+            }
         }
     }
 

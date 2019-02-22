@@ -6,6 +6,7 @@ import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -43,7 +44,7 @@ import top.wefor.circularanim.CircularAnim;
 @Route(path = "/User/AccountLoginActivity")
 public class AccountLoginActivity extends BaseActivity {
     private LoginViewModel mLoginViewModel;
-    private SecurityEditText mAccount;
+    private EditText mAccount;
     private SecurityEditText mM;
     private Button mBtLogin;
 
