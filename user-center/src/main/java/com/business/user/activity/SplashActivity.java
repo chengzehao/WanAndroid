@@ -12,6 +12,7 @@ import com.sgitg.common.utils.ToastUtils;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.Permission;
+import com.yanzhenjie.sofia.Sofia;
 
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void setUpView() {
+        Sofia.with(this).statusBarDarkFont().statusBarBackgroundAlpha(0).invasionStatusBar();
         AndPermission.with(this)
                 .runtime()
                 .permission(Permission.Group.STORAGE, Permission.Group.CAMERA)
