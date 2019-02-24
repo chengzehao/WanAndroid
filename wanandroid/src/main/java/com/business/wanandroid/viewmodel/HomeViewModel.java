@@ -4,7 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.business.wanandroid.Urls;
-import com.business.wanandroid.bean.HomeArticleBean;
+import com.business.wanandroid.bean.ArticleBean;
 import com.business.wanandroid.bean.HomeBannerBean;
 import com.sgitg.common.http.CallServer;
 import com.sgitg.common.http.EntityListRequest;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
  */
 
 public class HomeViewModel extends BaseViewModel {
-    private MutableLiveData<RestResult<HomeArticleBean>> mHomeArticleData;
+    private MutableLiveData<RestResult<ArticleBean>> mHomeArticleData;
     private MutableLiveData<RestResult<ArrayList<HomeBannerBean>>> mHomeBannerData;
     private MutableLiveData<RestResult<String>> mCollectResult;
     private MutableLiveData<RestResult<String>> mUnCollectResult;
@@ -40,16 +40,16 @@ public class HomeViewModel extends BaseViewModel {
 
     public void loadHomeArticle(int pageIndex) {
         String url = Urls.HOME_ARTICLE + File.separator + pageIndex + File.separator + "json";
-        EntityRequest<HomeArticleBean> request = new EntityRequest<>(url, RequestMethod.GET, HomeArticleBean.class);
-        CallServer.getInstance().request(0, request, new HttpListener<HomeArticleBean>() {
+        EntityRequest<ArticleBean> request = new EntityRequest<>(url, RequestMethod.GET, ArticleBean.class);
+        CallServer.getInstance().request(0, request, new HttpListener<ArticleBean>() {
             @Override
-            public void onResponse(int what, RestResult<HomeArticleBean> t) {
+            public void onResponse(int what, RestResult<ArticleBean> t) {
                 mHomeArticleData.setValue(t);
             }
         });
     }
 
-    public LiveData<RestResult<HomeArticleBean>> getHomeArticle() {
+    public LiveData<RestResult<ArticleBean>> getHomeArticle() {
         return mHomeArticleData;
     }
 

@@ -2,6 +2,7 @@ package com.business.wanandroid.activity;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.business.wanandroid.Constants;
@@ -40,6 +41,12 @@ public class WanAndroidMainActivity extends AbstractDoubleClickOutActivity {
             @Override
             public void onTabSelected(int tabId) {
                 switchFragment(tabId);
+            }
+        });
+        findViewById(R.id.search).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                readyGo(SearchActivity.class);
             }
         });
     }

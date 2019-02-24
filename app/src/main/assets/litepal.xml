@@ -4,5 +4,6 @@
     <version value="1" />
     <list>
         <mapping class="com.business.user.bean.UserBean" />
+        <mapping class="com.business.wanandroid.bean.SearchHistoryBean" />
     </list>
 </litepal>

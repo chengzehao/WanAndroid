@@ -75,4 +75,14 @@ public class Urls {
      */
     public static final String COLLECT_LIST = SERVER_URL + File.separator + "lg" + File.separator + "collect"+ File.separator + "list";
 
+    /**
+     * 热词
+     */
+    public static final String HOT = SERVER_URL + File.separator + "hotkey" + File.separator + "json";
+
+    /**
+     * 搜索
+     */
+    public static final String SEARCH = SERVER_URL + File.separator + "article" + File.separator + "query";
+
 }

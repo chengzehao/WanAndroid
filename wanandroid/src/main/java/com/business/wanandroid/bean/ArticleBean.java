@@ -9,7 +9,7 @@ import java.util.List;
  * @date 2019/2/11/011 13:15
  */
 
-public class HomeArticleBean {
+public class ArticleBean {
     private int curPage;
     private int offset;
     private boolean over;

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.business.wanandroid.R;
 import com.business.wanandroid.adapter.ArticleAdapter;
-import com.business.wanandroid.bean.HomeArticleBean;
+import com.business.wanandroid.bean.ArticleBean;
 import com.business.wanandroid.bean.HomeBannerBean;
 import com.business.wanandroid.viewmodel.HomeViewModel;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -39,7 +39,7 @@ import java.util.List;
  * @date 2019/2/11/011 13:42
  */
 
-public class HomeFragment extends AbstractLazyLoadListFragment<HomeArticleBean.DatasBean> {
+public class HomeFragment extends AbstractLazyLoadListFragment<ArticleBean.DatasBean> {
     private HomeViewModel mViewModel;
     private Banner mBanner;
     private int mCollectPos;
@@ -60,9 +60,9 @@ public class HomeFragment extends AbstractLazyLoadListFragment<HomeArticleBean.D
             }
         });
 
-        mViewModel.getHomeArticle().observe(this, new Observer<RestResult<HomeArticleBean>>() {
+        mViewModel.getHomeArticle().observe(this, new Observer<RestResult<ArticleBean>>() {
             @Override
-            public void onChanged(@Nullable RestResult<HomeArticleBean> restResult) {
+            public void onChanged(@Nullable RestResult<ArticleBean> restResult) {
                 if (restResult != null) {
                     if (checkHttpResult(restResult)) {
                         onLoadDataSuccess(getCurrentPageIndex() == getInitPageIndex(), restResult.getData().getDatas());
@@ -160,12 +160,12 @@ public class HomeFragment extends AbstractLazyLoadListFragment<HomeArticleBean.D
     }
 
     @Override
-    protected BaseQuickAdapter<HomeArticleBean.DatasBean, BaseViewHolder> createAdapter() {
+    protected BaseQuickAdapter<ArticleBean.DatasBean, BaseViewHolder> createAdapter() {
         ArticleAdapter adapter = new ArticleAdapter();
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                HomeArticleBean.DatasBean bean = (HomeArticleBean.DatasBean) adapter.getData().get(position);
+                ArticleBean.DatasBean bean = (ArticleBean.DatasBean) adapter.getData().get(position);
                 Bundle b = new Bundle();
                 b.putString(WebViewActivity.WEB_URL, bean.getLink());
                 b.putString(WebViewActivity.TITLE, bean.getTitle());
@@ -176,7 +176,7 @@ public class HomeFragment extends AbstractLazyLoadListFragment<HomeArticleBean.D
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 mCollectPos = position;
-                HomeArticleBean.DatasBean bean = (HomeArticleBean.DatasBean) adapter.getData().get(position);
+                ArticleBean.DatasBean bean = (ArticleBean.DatasBean) adapter.getData().get(position);
                 if (bean.isCollect()) {
                     mViewModel.unCollect(String.valueOf(bean.getId()));
                 } else {
@@ -206,7 +206,7 @@ public class HomeFragment extends AbstractLazyLoadListFragment<HomeArticleBean.D
             } else {
                 setAllCollectFalse();
                 for (Integer collect : collectList) {
-                    for (HomeArticleBean.DatasBean datasBean : getmAdapter().getData()) {
+                    for (ArticleBean.DatasBean datasBean : getmAdapter().getData()) {
                         if (collect == datasBean.getId()) {
                             datasBean.setCollect(true);
                         }
@@ -220,7 +220,7 @@ public class HomeFragment extends AbstractLazyLoadListFragment<HomeArticleBean.D
     }
 
     private void setAllCollectFalse() {
-        for (HomeArticleBean.DatasBean datasBean : getmAdapter().getData()) {
+        for (ArticleBean.DatasBean datasBean : getmAdapter().getData()) {
             datasBean.setCollect(false);
         }
     }
