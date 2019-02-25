@@ -17,7 +17,6 @@
 <img src="capture/09.png" width="30%" />
 <img src="capture/10.png" width="30%" />
 <img src="capture/11.png" width="30%" />
-<img src="capture/12.png" width="30%" />
 </div>
 
 
