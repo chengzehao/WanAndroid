@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,38 +17,24 @@
             android:contentDescription="@string/img_des"
             android:src="@mipmap/wanandroid" />
 
-        <ImageView
-            android:id="@+id/search"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:background="?attr/selectableItemBackground"
-            android:paddingEnd="16dp"
-            android:paddingStart="16dp"
-            android:src="@mipmap/ic_search_black_24dp" />
-
     </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.3dp"
-        android:background="@color/md_grey_300" />
 
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="56.3dp" />
 
-    <com.roughike.bottombar.BottomBar
-        android:id="@+id/bottomBar"
+    <com.luseen.spacenavigation.SpaceNavigationView
+        android:id="@+id/space"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        app:bb_activeTabColor="@color/colorAccent"
-        app:bb_inActiveTabColor="@color/md_grey_400"
-        app:bb_showShadow="true"
-        app:bb_behavior="shifting"
-        app:bb_tabXmlResource="@xml/bottombar_tabs" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:active_item_color="@color/colorAccent"
+        app:centre_button_color="@color/colorAccent"
+        app:centre_button_icon="@mipmap/ic_search_white_24dp"
+        app:inactive_item_color="@color/md_grey_400"
+        app:layout_behavior="com.luseen.spacenavigation.SpaceNavigationViewBehavior"
+        app:space_background_color="@color/md_white_1000" />
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

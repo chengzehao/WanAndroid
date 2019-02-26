@@ -64,7 +64,6 @@ dependencies {
     compile 'cat.ereza:customactivityoncrash:2.2.0'
     compile 'me.shaohui:bottomdialog:1.1.9'
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.35'
-    compile 'com.roughike:bottom-bar:2.3.1'
     compile 'com.github.XunMengWinter:CircularAnim:0.4.5'
     compile 'com.sdsmdg.tastytoast:tastytoast:0.1.1'
     compile 'de.hdodenhof:circleimageview:2.2.0'
@@ -83,4 +82,5 @@ dependencies {
     compile 'com.youth.banner:banner:1.4.10'
     compile 'com.github.jd-alexander:LikeButton:0.2.3'
     compile 'com.just.agentweb:agentweb:4.0.2'
+    compile 'com.github.armcha:SpaceNavigationView:1.6.0'
 }

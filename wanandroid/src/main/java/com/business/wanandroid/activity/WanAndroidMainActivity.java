@@ -2,7 +2,6 @@ package com.business.wanandroid.activity;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.business.wanandroid.Constants;
@@ -11,8 +10,9 @@ import com.business.wanandroid.fragment.HomeFragment;
 import com.business.wanandroid.fragment.MineFragment;
 import com.business.wanandroid.fragment.ProjectTabFragment;
 import com.business.wanandroid.fragment.SystemCategoryFragment;
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnTabSelectListener;
+import com.luseen.spacenavigation.SpaceItem;
+import com.luseen.spacenavigation.SpaceNavigationView;
+import com.luseen.spacenavigation.SpaceOnClickListener;
 import com.sgitg.common.base.AbstractDoubleClickOutActivity;
 
 /**
@@ -36,26 +36,38 @@ public class WanAndroidMainActivity extends AbstractDoubleClickOutActivity {
     @Override
     protected void setUpView() {
         super.setUpView();
-        BottomBar mBottomBar = findViewById(R.id.bottomBar);
-        mBottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+        SpaceNavigationView spaceNavigationView = findViewById(R.id.space);
+        spaceNavigationView.addSpaceItem(new SpaceItem("首页", R.mipmap.bottom_menu_home));
+        spaceNavigationView.addSpaceItem(new SpaceItem("项目", R.mipmap.bottom_menu_project));
+        spaceNavigationView.addSpaceItem(new SpaceItem("体系", R.mipmap.bottom_menu_system));
+        spaceNavigationView.addSpaceItem(new SpaceItem("我的", R.mipmap.bottom_menu_mine));
+        spaceNavigationView.setCentreButtonIconColorFilterEnabled(false);
+        spaceNavigationView.showIconOnly();
+
+        spaceNavigationView.setSpaceOnClickListener(new SpaceOnClickListener() {
             @Override
-            public void onTabSelected(int tabId) {
-                switchFragment(tabId);
-            }
-        });
-        findViewById(R.id.search).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            public void onCentreButtonClick() {
                 readyGo(SearchActivity.class);
             }
+
+            @Override
+            public void onItemClick(int itemIndex, String itemName) {
+                switchFragment(itemIndex);
+            }
+
+            @Override
+            public void onItemReselected(int itemIndex, String itemName) {
+            }
         });
+
+        switchFragment(0);
     }
 
     private void switchFragment(int tabId) {
         FragmentManager mFragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
         hideFragment(fragmentTransaction);
-        if (tabId == R.id.tab_home) {
+        if (tabId == 0) {
             if (mHomeFragment == null) {
                 mHomeFragment = new HomeFragment();
                 fragmentTransaction.add(R.id.container, mHomeFragment, Constants.HOME_TAG);
@@ -63,7 +75,7 @@ public class WanAndroidMainActivity extends AbstractDoubleClickOutActivity {
                 fragmentTransaction.show(mHomeFragment);
             }
 
-        } else if (tabId == R.id.tab_project) {
+        } else if (tabId == 1) {
             if (mProjectFragment == null) {
                 mProjectFragment = new ProjectTabFragment();
                 fragmentTransaction.add(R.id.container, mProjectFragment, Constants.PROJECT_TAG);
@@ -71,7 +83,7 @@ public class WanAndroidMainActivity extends AbstractDoubleClickOutActivity {
                 fragmentTransaction.show(mProjectFragment);
             }
 
-        } else if (tabId == R.id.tab_system) {
+        } else if (tabId == 2) {
             if (mSystemFragment == null) {
                 mSystemFragment = new SystemCategoryFragment();
                 fragmentTransaction.add(R.id.container, mSystemFragment, Constants.SYSTEM_TAG);
@@ -79,7 +91,7 @@ public class WanAndroidMainActivity extends AbstractDoubleClickOutActivity {
                 fragmentTransaction.show(mSystemFragment);
             }
 
-        } else if (tabId == R.id.tab_mine) {
+        } else if (tabId == 3) {
             if (mMineFragment == null) {
                 mMineFragment = new MineFragment();
                 fragmentTransaction.add(R.id.container, mMineFragment, Constants.MINE_TAG);
