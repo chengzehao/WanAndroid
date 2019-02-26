@@ -42,7 +42,7 @@ public class WanAndroidMainActivity extends AbstractDoubleClickOutActivity {
         spaceNavigationView.addSpaceItem(new SpaceItem("体系", R.mipmap.bottom_menu_system));
         spaceNavigationView.addSpaceItem(new SpaceItem("我的", R.mipmap.bottom_menu_mine));
         spaceNavigationView.setCentreButtonIconColorFilterEnabled(false);
-        spaceNavigationView.showIconOnly();
+        spaceNavigationView.showTextOnly();
 
         spaceNavigationView.setSpaceOnClickListener(new SpaceOnClickListener() {
             @Override

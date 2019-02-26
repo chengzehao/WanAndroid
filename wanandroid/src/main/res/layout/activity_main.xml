@@ -23,7 +23,8 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="56.3dp" />
+        android:layout_marginTop="56.3dp"
+        android:layout_marginBottom="50dp" />
 
     <com.luseen.spacenavigation.SpaceNavigationView
         android:id="@+id/space"
@@ -34,7 +35,7 @@
         app:centre_button_color="@color/colorAccent"
         app:centre_button_icon="@mipmap/ic_search_white_24dp"
         app:inactive_item_color="@color/md_grey_400"
-        app:layout_behavior="com.luseen.spacenavigation.SpaceNavigationViewBehavior"
         app:space_background_color="@color/md_white_1000" />
+    <!--app:layout_behavior="com.luseen.spacenavigation.SpaceNavigationViewBehavior"-->
 
 </android.support.design.widget.CoordinatorLayout>
