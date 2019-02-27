@@ -23,7 +23,7 @@ Java_com_sgitg_common_NdkMethods_getServerPath(JNIEnv *env, jclass type);
 }
 
 
-JNIEXPORT void JNICALL
+extern "C" JNIEXPORT void JNICALL
 Java_com_sgitg_common_NdkMethods_signatureVerify(JNIEnv *env, jclass type,
                                                  jobject context) {
 
@@ -66,7 +66,7 @@ Java_com_sgitg_common_NdkMethods_signatureVerify(JNIEnv *env, jclass type,
     }
 }
 
-JNIEXPORT jstring JNICALL
+extern "C" JNIEXPORT jstring JNICALL
 Java_com_sgitg_common_NdkMethods_getPreferencesPd(JNIEnv *env, jclass type) {
     if (is_verify == 0) {
         return env->NewStringUTF("error signature");
@@ -74,7 +74,7 @@ Java_com_sgitg_common_NdkMethods_getPreferencesPd(JNIEnv *env, jclass type) {
     return env->NewStringUTF(EXTRA_SIGNATURE);
 }
 
-JNIEXPORT jstring JNICALL
+extern "C" JNIEXPORT jstring JNICALL
 Java_com_sgitg_common_NdkMethods_getServerPath(JNIEnv *env, jclass type) {
     if (is_verify == 1) {
         return env->NewStringUTF(SERVER);

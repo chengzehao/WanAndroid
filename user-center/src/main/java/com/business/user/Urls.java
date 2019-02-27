@@ -16,8 +16,8 @@ public class Urls {
     /**
      * 主路径
      */
-    private static final String SERVER_URL = NdkMethods.getServerPath();
-
+    //private static final String SERVER_URL = NdkMethods.getServerPath();
+    private static final String SERVER_URL = "http://www.wanandroid.com";
 
     /**
      * 登录验证
