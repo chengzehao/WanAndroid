@@ -14,7 +14,7 @@ public class App extends LibApp {
     @Override
     public void onCreate() {
         super.onCreate();
-        NdkMethods.signatureVerify(this);
+        //NdkMethods.signatureVerify(this);
         /*if (CommonUtils.isRoot()) {
             throw new RuntimeException(getString(R.string.illegal_root));
         }
