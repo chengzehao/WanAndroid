@@ -73,7 +73,7 @@ public class LibApp extends MultiDexApplication {
 
     public SharedPreferences getSharedPreferences() {
         if (mSecurePrefs == null) {
-            mSecurePrefs = new SecurePreferences(this, NdkMethods.getPreferencesPd(), "mm_prefs.xml");
+            mSecurePrefs = new SecurePreferences(this, "123", "mm_prefs.xml");
         }
         return mSecurePrefs;
     }

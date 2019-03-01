@@ -13,23 +13,12 @@ android {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
             }
         }
-        externalNativeBuild {
-            cmake {
-                cppFlags ""
-            }
-        }
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    externalNativeBuild {
-        cmake {
-            path "CMakeLists.txt"
         }
     }
 
@@ -53,17 +42,17 @@ dependencies {
     compile 'com.yanzhenjie.nohttp:nohttp:1.1.11'
     compile 'top.zibin:Luban:1.1.1'
     compile 'com.yanzhenjie:album:2.1.2'
-    compile 'com.yanzhenjie:permission:2.0.0-rc12'
+    compile 'com.yanzhenjie:permission:2.0.0-rc5'
     compile 'org.greenrobot:eventbus:3.1.1'
     compile 'me.solidev.library:status-view-layout:0.3.8'
     compile 'cn.yipianfengye.android:zxing-library:2.0'
     compile 'co.lujun:androidtagview:1.1.1'
     compile 'com.stepstone.stepper:material-stepper:4.3.1'
     compile 'com.scottyab:secure-preferences-lib:0.1.4'
-    compile 'com.alibaba:fastjson:1.2.30'
+    compile 'com.alibaba:fastjson:1.2.48'
     compile 'cat.ereza:customactivityoncrash:2.2.0'
     compile 'me.shaohui:bottomdialog:1.1.9'
-    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.35'
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.41'
     compile 'com.github.XunMengWinter:CircularAnim:0.4.5'
     compile 'com.sdsmdg.tastytoast:tastytoast:0.1.1'
     compile 'de.hdodenhof:circleimageview:2.2.0'
@@ -78,7 +67,7 @@ dependencies {
     compile 'org.litepal.android:java:3.0.0'
     compile 'com.alibaba:arouter-api:1.4.1'
     annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
-    compile 'com.android.support:multidex:1.0.0'
+    compile 'com.android.support:multidex:1.0.3'
     compile 'com.youth.banner:banner:1.4.10'
     compile 'com.github.jd-alexander:LikeButton:0.2.3'
     compile 'com.just.agentweb:agentweb:4.0.2'

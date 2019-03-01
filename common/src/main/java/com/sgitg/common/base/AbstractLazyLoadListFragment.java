@@ -176,4 +176,10 @@ public abstract class AbstractLazyLoadListFragment<T> extends AbstractLazyLoadFr
     public int getCurrentPageIndex() {
         return mCurrentPageIndex;
     }
+
+    protected void initRefresh() {
+        showLoading();
+        mCurrentPageIndex = getInitPageIndex();
+        loadData(mCurrentPageIndex);
+    }
 }

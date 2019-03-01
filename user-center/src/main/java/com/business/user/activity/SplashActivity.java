@@ -1,13 +1,9 @@
 package com.business.user.activity;
 
-import android.os.Looper;
-
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.business.user.R;
-import com.business.user.utils.AntiHijackingUtils;
 import com.sgitg.common.base.BaseActivity;
 import com.sgitg.common.thread.MainThreadExcute;
-import com.sgitg.common.thread.ThreadManager;
 import com.sgitg.common.utils.ToastUtils;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
@@ -70,32 +66,5 @@ public class SplashActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
 
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        ThreadManager.getLongPool().execute(new Runnable() {
-            @Override
-            public void run() {
-                // 白名单
-                boolean safe = AntiHijackingUtils.checkActivity(getApplicationContext());
-                // 系统桌面
-                boolean isHome = AntiHijackingUtils.isHome(getApplicationContext());
-                // 锁屏操作
-                boolean isReflectScreen = AntiHijackingUtils.isReflectScreen(getApplicationContext());
-                // 判断程序是否当前显示
-                if (!safe && !isHome && !isReflectScreen) {
-                    Looper.prepare();
-                    MainThreadExcute.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            ToastUtils.getInstance().showErrorInfoToast("仓储移动引用被切换至后台，请您确认使用环境是否安全！");
-                        }
-                    });
-                    Looper.loop();
-                }
-            }
-        });
     }
 }

@@ -43,22 +43,15 @@
 
     <color name="md_blue">#33A1C9</color>
     <color name="md_blue_dark">#3098be</color>
-    <color name="theme_green">#269396</color>
-    <color name="theme_green_dark">#248a8d</color>
-    <color name="light_color_green">#dbeef2</color>
     <color name="light_color_blue">#e4f2ff</color>
-    <color name="md_blue_grey_200">#b0bec5</color>
-    <color name="md_pink_200">#f48fb1</color>
-    <color name="md_purple_200">#ce93d8</color>
+    <color name="light_blue_line">#cadffc</color>
+
     <color name="md_yellow_200">#fff59d</color>
     <color name="md_yellow_300">#fff176</color>
     <color name="md_green_200">#72d572</color>
     <color name="md_light_blue_300">#4fc3f7</color>
-    <color name="md_blue_grey_300">#90a4ae</color>
-    <color name="md_amber_300">#ffd54f</color>
     <color name="md_light_green_300">#aed581</color>
     <color name="md_light_green_100">#bbe58a</color>
-    <color name="light_blue_line">#cadffc</color>
 
     <color name="tag_bg_red">#33F44336</color>
     <color name="tag_bd_red">#88F44336</color>
