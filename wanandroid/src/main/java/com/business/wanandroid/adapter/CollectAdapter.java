@@ -5,6 +5,7 @@ import com.business.wanandroid.bean.CollectBean;
 import com.chad.library.adapter.base.BaseItemDraggableAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sgitg.common.utils.DateUtils;
+import com.sgitg.common.utils.StringUtils;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class CollectAdapter extends BaseItemDraggableAdapter<CollectBean.DatasBe
     protected void convert(BaseViewHolder helper, CollectBean.DatasBean bean) {
         helper.setText(R.id.tv_people, bean.getAuthor());
         helper.setText(R.id.tv_time, DateUtils.friendlyTime(DateUtils.parseDateTime(bean.getPublishTime())));
-        helper.setText(R.id.tv_title, bean.getTitle());
+        helper.setText(R.id.tv_title, StringUtils.deal(bean.getTitle()));
         helper.setText(R.id.chapterName, bean.getChapterName());
         helper.setText(R.id.nice_time, bean.getNiceDate());
     }

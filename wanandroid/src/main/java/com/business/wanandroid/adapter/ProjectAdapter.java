@@ -26,7 +26,7 @@ public class ProjectAdapter extends BaseQuickAdapter<ProjectBean.DatasBean, Base
     protected void convert(BaseViewHolder helper, ProjectBean.DatasBean bean) {
         helper.setText(R.id.tv_people, bean.getAuthor());
         helper.setText(R.id.tv_time, DateUtils.friendlyTime(DateUtils.parseDateTime(bean.getPublishTime())));
-        helper.setText(R.id.tv_title, bean.getTitle());
+        helper.setText(R.id.tv_title, StringUtils.deal(bean.getTitle()));
         helper.getView(R.id.chapterName).setVisibility(View.GONE);
         if (StringUtils.isNullOrEmpty(bean.getEnvelopePic())) {
             helper.getView(R.id.iv_img).setVisibility(View.GONE);

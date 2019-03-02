@@ -1,5 +1,9 @@
 package com.sgitg.common.utils;
 
+import android.graphics.Color;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+
 /**
  * StringUtils
  *
@@ -23,5 +27,20 @@ public class StringUtils {
             s = s.replaceAll("[.]$", "");
         }
         return s;
+    }
+
+    public static SpannableString deal(String title) {
+        String keyStart = "<em class='highlight'>";
+        String keyEnd = "</em>";
+        if (!title.contains(keyStart) && !title.contains(keyEnd)) {
+            return new SpannableString(title);
+        }
+        int start = title.indexOf(keyStart);
+        int end = title.indexOf(keyEnd) - keyStart.length();
+        title = title.replace(keyStart, "");
+        title = title.replace(keyEnd, "");
+        SpannableString sb = new SpannableString(title);
+        sb.setSpan(new ForegroundColorSpan(Color.parseColor("#F44336")), start, end, SpannableString.SPAN_INCLUSIVE_INCLUSIVE);
+        return sb;
     }
 }

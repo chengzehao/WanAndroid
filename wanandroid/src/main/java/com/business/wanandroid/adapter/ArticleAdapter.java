@@ -1,5 +1,8 @@
 package com.business.wanandroid.adapter;
 
+import android.support.v4.content.ContextCompat;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -26,7 +29,7 @@ public class ArticleAdapter extends BaseQuickAdapter<ArticleBean.DatasBean, Base
     protected void convert(BaseViewHolder helper, ArticleBean.DatasBean bean) {
         helper.setText(R.id.tv_people, bean.getAuthor());
         helper.setText(R.id.tv_time, DateUtils.friendlyTime(DateUtils.parseDateTime(bean.getPublishTime())));
-        helper.setText(R.id.tv_title, bean.getTitle());
+        helper.setText(R.id.tv_title, StringUtils.deal(bean.getTitle()));
         helper.setText(R.id.chapterName, bean.getChapterName());
         if (StringUtils.isNullOrEmpty(bean.getEnvelopePic())) {
             helper.getView(R.id.iv_img).setVisibility(View.GONE);
