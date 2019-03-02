@@ -4,15 +4,6 @@ android {
     dexOptions {
         jumboMode = true
     }
-    signingConfigs {
-        config {
-            keyAlias 'zl'
-            keyPassword '310125'
-            storeFile file('F:/richsoft.jks')
-            storePassword '310125'
-        }
-    }
-
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.symbol.wanandroid"
@@ -27,14 +18,12 @@ android {
             debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
         }
         release {
             debuggable false
             minifyEnabled true
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
         }
     }
 
