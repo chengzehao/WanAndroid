@@ -23,10 +23,9 @@
 
 ## Points
 
-* 组件化开发，Arouter实战使用
-* ViewModel+Nohttp架构，整体轻盈
-* ListFragment封装良好，便于使用
-* 使用EventBus来方便组件间的通信
-* 使用NDK完成应用签名校验。
+* 组件化开发，Arouter界面跳转以及跨模块服务通信实战应用
+* ViewModel+LiveData+NoHttp构建请求框架,封装BaseViewModel,BaseActivity BaseFragment.稳定灵活
+* 基于BaseRecyclerViewAdapterHelper封装ListFragment，方便快速得搭建开发过程中最常用得界面
+* 架构稳定，已应用于生产
 
 
